@@ -18,5 +18,8 @@ jobs:
     - name: Install Dependencies
       run: npm install
 
+    - name: Install Cypress
+      run: npm install cypress --save-dev
+
     - name: Run Cypress Tests
       run: npm cypress run
