@@ -1,12 +1,9 @@
 module.exports = {
-  projectId: 'd25ro2',
+  projectId: 'nir5f9',
+  record: true,
+  chromeWebSecurity: false,
   e2e: {
-    setupNodeEvents(on, config) {
-      // implement node event listeners here
-    },
-    specPattern: "cypress/e2e/**/*.ts",
-    env: {
-      BASE_URL: 'https://www.stagingworkyardwebsite.com/u'
-    }
-  },
-};
+    specPattern: 'cypress/e2e/**/*.ts',
+    excludeSpecPattern: 'cypress/utilities/**/*.ts'
+  }
+}
