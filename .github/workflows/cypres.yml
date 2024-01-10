@@ -1,8 +1,6 @@
 name: Daily Cypress Tests
 
-on:
-  schedule:
-    - cron: '20 04 10 01 03'  # Runs every day at midnight
+on: [push]
 
 jobs:
   run-cypress-tests:
