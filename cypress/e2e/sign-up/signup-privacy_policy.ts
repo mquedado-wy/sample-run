@@ -1,96 +1,34 @@
-describe('Verify Workyard Privacy Policy page is loaded', () => {
-  it('should visit the Workyard Privacy Policy Page', () => {
-    const TERMS_OF_USE_URL = 'https://www.workyard.com/privacy'
+import {
+  FIRST_LAST_NAME_HDR,
+  EMAIL_HDR,
+  MOBILE_NUMBER_HDR,
+  BUSINESS_NAME_HDR,
+  EMPLOYEE_DROPDOWN_HDR,
+  PASSWORD_HDR,
+  LETSGO_BTN
+} from '../../utilities/sign-up/signup-locators'
 
-    // Visit the webpage for TERMS OF USE
-    cy.visit(TERMS_OF_USE_URL)
+describe('Verify Signup Page is loaded', () => {
+  it('Visits the staging workyard website Signup Page', () => {
+    const baseUrl = Cypress.env('baseUrl')
+    cy.visit(`${baseUrl}/sign_up`)
+    cy.contains('Try Workyard for free').should('be.visible')
 
-    cy.assertScrollIntoViewElementContainsText(
-      'h1',
-      'Workyard Privacy Policy',
-      'Workyard Privacy Policy'
-    )
-    cy.assertScrollIntoViewElementContainsText(
-      'p',
-      'Last Updated 9/15/2020',
-      'Last Updated 9/15/2020'
-    )
-    cy.assertScrollIntoViewElementContainsText(
-      'h2',
-      'Purpose of Our Policy',
-      'Purpose of Our Policy'
-    )
-    cy.assertScrollIntoViewElementContainsText(
-      'h2',
-      'Personal Information We Collect',
-      'Personal Information We Collect'
-    )
-    cy.assertScrollIntoViewElementContainsText(
-      'h2',
-      'How Personal Information Is Collected',
-      'How Personal Information Is Collected'
-    )
-    cy.assertScrollIntoViewElementContainsText(
-      'h2',
-      'How Personal Information Is Used and Disclosed',
-      'How Personal Information Is Used and Disclosed'
-    )
-    cy.assertScrollIntoViewElementContainsText(
-      'h2',
-      'Cookies and Other Tracking Technologies',
-      'Cookies and Other Tracking Technologies'
-    )
-    cy.assertScrollIntoViewElementContainsText(
-      'h2',
-      'Your Choices',
-      'Your Choices'
-    )
-    cy.assertScrollIntoViewElementContainsText('h2', 'Security', 'Security')
-    cy.assertScrollIntoViewElementContainsText(
-      'h2',
-      'Your Rights',
-      'Your Rights'
-    )
-    cy.assertScrollIntoViewElementContainsText(
-      'h2',
-      'California Privacy Rights',
-      'California Privacy Rights'
-    )
-    cy.assertScrollIntoViewElementContainsText(
-      'h2',
-      'Do Not Track',
-      'Do Not Track'
-    )
-    cy.assertScrollIntoViewElementContainsText(
-      'h2',
-      'Complaints & Disputes',
-      'Complaints & Disputes'
-    )
-    cy.assertScrollIntoViewElementContainsText('h2', 'Children', 'Children')
-    cy.assertScrollIntoViewElementContainsText(
-      'h2',
-      'Third-Party Links',
-      'Third-Party Links'
-    )
-    cy.assertScrollIntoViewElementContainsText(
-      'h2',
-      'No Rights Of Third Parties',
-      'No Rights Of Third Parties'
-    )
-    cy.assertScrollIntoViewElementContainsText(
-      'h2',
-      'How We Communicate With You',
-      'How We Communicate With You'
-    )
-    cy.assertScrollIntoViewElementContainsText(
-      'h2',
-      'Contacting Us',
-      'Contacting Us'
-    )
-    cy.assertScrollIntoViewElementContainsText(
-      'h2',
-      'Changes To This Privacy Policy',
-      'Changes To This Privacy Policy'
-    )
+    // Verify all sign-up fields are displayed
+    cy.get(FIRST_LAST_NAME_HDR).should('be.visible')
+    cy.get(EMAIL_HDR).should('be.visible')
+    cy.get(MOBILE_NUMBER_HDR).should('be.visible')
+    cy.get(BUSINESS_NAME_HDR).should('be.visible')
+    cy.get(EMPLOYEE_DROPDOWN_HDR).should('be.visible')
+    cy.get(PASSWORD_HDR).should('be.visible')
+    cy.get(LETSGO_BTN).scrollIntoView().should('be.visible')
+
+    // Verify that Terms of Use and Provicy Policy has the correct hyperlinks
+    cy.contains('a', 'Terms of Use')
+      .should('be.visible')
+      .and('have.attr', 'href', 'https://www.workyard.com/terms')
+    cy.contains('a', 'Privacy Policy')
+      .should('be.visible')
+      .and('have.attr', 'href', 'https://www.workyard.com/privacy')
   })
 })
