@@ -17,7 +17,7 @@ export const PLAN_LBL1 = 'label[id="undefined-label"]'
 export const PLAN_LBL2 = 'div[class="plan-billing-detailsstyled__SubText-sc-16v5pq1-5 gtbPQO"]'
 export const DUE_NOW_HDR = 'div[class="plan-billing-detailsstyled__DueNowText-sc-16v5pq1-12 ecMeAf"]'
 export const CREDIT_CARD_FLD = 'div[class="StripeElement StripeElement--empty"]'
-export const AGREE_TERMS_OF_SERVICE_LBL = 'div[class="billing-modalstyled__Footer-sc-5pr1p6-3 hknYbh"]'
+export const AGREE_TERMS_OF_SERVICE = 'form > div.flex.gap-1'
 
 // SUBSCRIPTION BUTTONS
 export const ACTIVATE_PLAN_BTN = 'button[data-testid="activate-now-button-get-started"]'
