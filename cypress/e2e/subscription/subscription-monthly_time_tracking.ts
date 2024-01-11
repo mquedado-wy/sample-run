@@ -71,7 +71,7 @@ import {
 } from '../../utilities/dashboard/dashboard-locators'
 
 const baseUrl = Cypress.env('baseUrl')
-const amplitudeEndPoint = Cypress.env('amplitudeEndPoint')
+const paymentMethodEndPoint = Cypress.env('paymentMethodEndPoint')
 const billingAndPlansEndPoint = new RegExp(
   Cypress.env('billingAndPlansEndPoint')
 )
@@ -134,7 +134,7 @@ describe('Create a new User to test Subscription Page', () => {
 
     // Intercept 'POST' Request then wait for the request to have Success 200 Code
     cy.assertElementVisibleAndClick(AGREE_TERMS_OF_SERVICE, 'accept-terms')
-    cy.intercept('POST', amplitudeEndPoint).as('subscribePlan')
+    cy.intercept('POST', paymentMethodEndPoint).as('subscribePlan')
     cy.intercept('POST', billingAndPlansEndPoint).as('billingEndPoint')
 
     cy.assertElementVisibleAndClick(SUBSCRIBE_BTN, 'subscribe-btn')
