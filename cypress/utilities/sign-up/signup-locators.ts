@@ -30,5 +30,5 @@ export const PASSWORD_ERROR_FLD = 'div[data-testid="password-error-field"]'
 
 // SIGN-UP BUTTONS
 export const LETSGO_BTN = 'button[data-testid="submit-btn"]'
-export const SKIP_ONBOARDING_BTN = 'div[class="no-underline"]'
+export const SKIP_ONBOARDING_BTN = 'div[data-testid=skip-pick-a-time-onboarding]'
 export const CLOSE_TUTORIAL_BTN = 'svg[data-testid=svg-close]'
