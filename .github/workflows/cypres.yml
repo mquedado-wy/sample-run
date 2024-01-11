@@ -1,11 +1,8 @@
 name: Daily Cypress Tests
 
 on:
-  workflow_dispatch:
-    inputs:
-      runAt: '55 6 * * *'
-        description: 7:00 AM
-        required: true
+  schedule:
+    - cron: '2 7 * * *'
 jobs:
   run-cypress-tests:
     runs-on: ubuntu-latest
