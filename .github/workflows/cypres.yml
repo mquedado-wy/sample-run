@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       runAt: '55 6 * * *'
-        description: '6:55 AM'
+        description: 7:00 AM
         required: true
 jobs:
   run-cypress-tests:
