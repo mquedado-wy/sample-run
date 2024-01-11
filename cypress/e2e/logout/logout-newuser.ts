@@ -51,7 +51,7 @@ describe('Verify a "newly" registered user is able to login', () => {
     cy.get(EMAIL_FLD).type(NEW_SIGNUP_EMAIL_1)
     cy.get(MOBILE_NUMBER_FLD).type(MOBILE_NUMBER_LOGIN)
     cy.get(BUSINESS_NAME_FLD).type(BUSINESS_NAME_LOGIN)
-
+    cy.get(DOWN_EMP_DROPDOWN).should('be.visible').click()
     cy.get(EMPLOYEE_DROPDOWN).should('be.visible').contains('6-10').click()
     cy.get(PASSWORD_FLD).type(DEFAULT_PASSWORD)
     cy.assertElementVisibleAndClick(LETSGO_BTN, 'lets_go_btn')
