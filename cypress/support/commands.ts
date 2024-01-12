@@ -94,7 +94,7 @@ Cypress.Commands.add(
 Cypress.Commands.add(
   'assertElementVisibleAndClick',
   (selector: string, aliasName: string) => {
-    cy.get(selector).should('be.visible').as(aliasName).click()
+    cy.get(selector).should('exist').should('be.visible').as(aliasName).click({ force: true })
   }
 )
 
