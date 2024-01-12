@@ -2,7 +2,7 @@ name: Daily Cypress Tests
 
 on:
   schedule:
-    - cron: '35 4 * * *'
+    - cron: '45 5 * * *'
 jobs:
   run-cypress-tests:
     runs-on: ubuntu-latest
