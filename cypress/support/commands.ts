@@ -6,6 +6,7 @@ declare namespace Cypress {
     assertElementsDoNotExist(selectors: string[]): Chainable
     assertElementsAreVisible(selectors: string[]): Chainable
     assertElementContainsText(selector: string, text: string): Chainable
+    assertElementContainsTextAndClick(selector: string, text: string): Chainable
     assertScrollIntoViewElementContainsText(
       selector: string,
       text: string,
@@ -22,6 +23,7 @@ declare namespace Cypress {
       selector: string
     ): Chainable
     assertElementVisibleAndClick(selector: string, aliasName: string): Chainable
+    assertElementVisibleAndType(selector: string, aliasName: string, userInputnput: string): Chainable
     assertStringsInElement(
       elementSelector: string,
       expectedStrings: string[]
@@ -92,9 +94,23 @@ Cypress.Commands.add(
 )
 
 Cypress.Commands.add(
+  'assertElementContainsTextAndClick',
+  (selector: string, text: string) => {
+    cy.get(selector).should('be.visible').contains(text).click()
+  }
+)
+
+Cypress.Commands.add(
   'assertElementVisibleAndClick',
   (selector: string, aliasName: string) => {
-    cy.get(selector).should('exist').should('be.visible').as(aliasName).click({ force: true })
+    cy.get(selector).should('exist').should('be.visible').as(aliasName).click()
+  }
+)
+
+Cypress.Commands.add(
+  'assertElementVisibleAndType',
+  (selector: string, aliasName: string, userInput: string) => {
+    cy.get(selector).should('exist').should('be.visible').as(aliasName).type(userInput)
   }
 )
 
