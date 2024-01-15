@@ -32,15 +32,16 @@ describe('Verify User Signs up for a 14-day Trial Period', () => {
       cy.get(FIRST_LAST_NAME_FLD).type(finName)
     })
 
-    cy.get(EMAIL_FLD).type(NEW_SIGNUP_EMAIL)
+    cy.assertElementVisibleAndType(EMAIL_FLD, 'user-email', NEW_SIGNUP_EMAIL)
 
-    cy.get(MOBILE_NUMBER_FLD).type(MOBILE_NUMBER_SIGNUP)
+    cy.assertElementVisibleAndType(MOBILE_NUMBER_FLD, 'user-mobile', MOBILE_NUMBER_SIGNUP)
 
-    cy.get(BUSINESS_NAME_FLD).type(BUSINESS_NAME_SIGNUP)
+    cy.assertElementVisibleAndType(BUSINESS_NAME_FLD, 'user-business-name', BUSINESS_NAME_SIGNUP)
 
-    cy.get(DOWN_EMP_DROPDOWN).should('be.visible').click()
-    cy.get(EMPLOYEE_DROPDOWN).should('be.visible').contains('6-10').click()
-    cy.get(PASSWORD_FLD).type(DEFAULT_PASSWORD)
+    cy.assertElementVisibleAndClick(DOWN_EMP_DROPDOWN, 'down-emp-dropwdown')
+    cy.assertElementContainsTextAndClick(EMPLOYEE_DROPDOWN, '6-10')
+    // cy.get(EMPLOYEE_DROPDOWN).should('be.visible').contains('6-10').click()
+    cy.assertElementVisibleAndType(PASSWORD_FLD, 'user-password', DEFAULT_PASSWORD)
 
     // Temporarily simulating no internet connection
     cy.window().then(win => {
@@ -50,17 +51,30 @@ describe('Verify User Signs up for a 14-day Trial Period', () => {
     cy.get(LETSGO_BTN).should('be.visible').click()
 
     // Verify that the loading spinner is displayed
-    cy.get(LOADING_SPINNER).should('be.visible')
+    cy.assertElementsAreVisible([LOADING_SPINNER])
     // This is to wait for the loading spinner to be not visible before proceeding with the next action
-    cy.get(LOADING_SPINNER).should('not.exist')
+    cy.assertElementsDoNotExist([LOADING_SPINNER])
 
     // User Account is expected to be created and User is navigated to Dashboard page
-    cy.get(SKIP_ONBOARDING_BTN).should('be.visible').as('skipbtn')
-    cy.get('@skipbtn').click()
-    cy.get(CLOSE_TUTORIAL_BTN).should('be.visible').as('closebtn')
-    cy.get('@closebtn').click()
+    cy.assertElementVisibleAndClick(SKIP_ONBOARDING_BTN, 'skip-btn')
+    cy.assertElementVisibleAndClick(CLOSE_TUTORIAL_BTN, 'close-btn')
 
     // Verify user is navigated in Dashboard page
     cy.contains('Get Started')
+  })
+})
+
+describe('DELETE delete_test_orgs', () => {
+  it('successfully deletes test organizations', () => {
+    cy.request({
+      method: 'DELETE',
+      url: 'https://staging-api1.workyard.com/delete_test_orgs',
+      headers: {
+        'x-workyard-system-tests': true
+
+      }
+    }).then((response) => {
+      expect(response.status).to.equal(200)
+    })
   })
 })
