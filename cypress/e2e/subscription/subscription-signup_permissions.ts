@@ -53,13 +53,25 @@ describe('Verify the permsissions of Admin, Manager and Worker in Signing up for
       const finName = INIT_NAME + randomString
       cy.get(FIRST_LAST_NAME_FLD).type(finName)
     })
-    cy.get(EMAIL_FLD).type(NEW_SIGNUP_EMAIL)
-    cy.get(MOBILE_NUMBER_FLD).type(MOBILE_NUMBER_SIGNUP)
-    cy.get(BUSINESS_NAME_FLD).type(BUSINESS_NAME_SIGNUP)
-    cy.assertElementVisibleAndClick(DOWN_EMP_DROPDOWN, 'down-emp-dropdown')
-    cy.get(EMPLOYEE_DROPDOWN).should('be.visible').contains('6-10').click()
-    cy.get(PASSWORD_FLD).type(DEFAULT_PASSWORD)
-    cy.assertElementVisibleAndClick(LETSGO_BTN, 'lets_go_btn')
+    cy.assertElementVisibleAndType(EMAIL_FLD, 'user-email', NEW_SIGNUP_EMAIL)
+    cy.assertElementVisibleAndType(
+      MOBILE_NUMBER_FLD,
+      'user-mobile',
+      MOBILE_NUMBER_SIGNUP
+    )
+    cy.assertElementVisibleAndType(
+      BUSINESS_NAME_FLD,
+      'user-business-name',
+      BUSINESS_NAME_SIGNUP
+    )
+    cy.assertElementVisibleAndClick(DOWN_EMP_DROPDOWN, 'down-emp-dropwdown')
+    cy.assertElementContainsTextAndClick(EMPLOYEE_DROPDOWN, '6-10')
+    cy.assertElementVisibleAndType(
+      PASSWORD_FLD,
+      'user-password',
+      DEFAULT_PASSWORD
+    )
+    cy.assertElementVisibleAndClick(LETSGO_BTN, 'letsgo-button')
 
     // Verify that the loading spinner is displayed
     cy.assertElementsAreVisible([LOADING_SPINNER])
@@ -74,7 +86,7 @@ describe('Verify the permsissions of Admin, Manager and Worker in Signing up for
     cy.contains('Get Started')
 
     // Verify that Plans and Settings are available
-    cy.assertElementVisibleAndClick(SETTINGS_BTN, 'settings-btn')
+    cy.assertElementVisibleAndClick(SETTINGS_BTN, 'settings-button')
     cy.assertElementsAreVisible([PLANS_AND_BILLING_BTN])
 
     // Verify Admin can see options for subscription to Time Tracking and Workforce Management
@@ -93,9 +105,17 @@ describe('Verify the permsissions of Admin, Manager and Worker in Signing up for
   it('should verify that Manager User does not have access to "Plans & Billing" menu', () => {
     // Logins the test data for User: Manager
     cy.visit(`${baseUrl}/login`)
-    cy.get(LOGIN_EMAIL_FLD).should('be.visible').type(testManagerAccount)
-    cy.get(LOGIN_PASSWORD_FLD).type(DEFAULT_PASSWORD)
-    cy.get(LOGIN_BTN).should('be.visible').click()
+    cy.assertElementVisibleAndType(
+      LOGIN_EMAIL_FLD,
+      'login-email-field',
+      testManagerAccount
+    )
+    cy.assertElementVisibleAndType(
+      LOGIN_PASSWORD_FLD,
+      'login-password-field',
+      DEFAULT_PASSWORD
+    )
+    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
 
     cy.assertElementsDoNotExist([ACTIVATE_PLAN_BTN])
     cy.assertElementVisibleAndClick(SETTINGS_BTN, 'settings-btn')
@@ -107,14 +127,36 @@ describe('Verify the permsissions of Admin, Manager and Worker in Signing up for
   it('should verify that Worker User does not have access to "Plans & Billing" and "Personal" menu', () => {
     // Logins the test data for User: Worker
     cy.visit(`${baseUrl}/login`)
-    cy.get(LOGIN_EMAIL_FLD).should('be.visible').type(testWorkerAccount)
-    cy.get(LOGIN_PASSWORD_FLD).type(DEFAULT_PASSWORD)
-    cy.get(LOGIN_BTN).should('be.visible').click()
+    cy.assertElementVisibleAndType(
+      LOGIN_EMAIL_FLD,
+      'login-email-field',
+      testWorkerAccount
+    )
+    cy.assertElementVisibleAndType(
+      LOGIN_PASSWORD_FLD,
+      'login-password-field',
+      DEFAULT_PASSWORD
+    )
+    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
 
     cy.assertElementsDoNotExist([ACTIVATE_PLAN_BTN])
     cy.assertElementVisibleAndClick(SETTINGS_BTN, 'settings-btn')
     cy.assertElementNotContainText(PERSONAL_BTN, 'Plans & Billing')
     cy.assertElementNotContainText(PERSONAL_BTN, 'Organization')
     cy.assertElementContainsText(PERSONAL_BTN, 'Personal')
+  })
+})
+
+describe('DELETE delete_test_orgs', () => {
+  it('successfully deletes test organizations', () => {
+    cy.request({
+      method: 'DELETE',
+      url: 'https://staging-api1.workyard.com/delete_test_orgs',
+      headers: {
+        'x-workyard-system-tests': true
+      }
+    }).then(response => {
+      expect(response.status).to.equal(200)
+    })
   })
 })
