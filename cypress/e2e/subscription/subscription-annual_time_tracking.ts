@@ -87,12 +87,24 @@ describe('Create a new User to test Subscription Page', () => {
       cy.get(FIRST_LAST_NAME_FLD).type(finName)
     })
 
-    cy.get(EMAIL_FLD).type(NEW_SIGNUP_EMAIL)
-    cy.get(MOBILE_NUMBER_FLD).type(MOBILE_NUMBER_SIGNUP)
-    cy.get(BUSINESS_NAME_FLD).type(BUSINESS_NAME_SIGNUP)
-    cy.get(DOWN_EMP_DROPDOWN).should('be.visible').click()
-    cy.get(EMPLOYEE_DROPDOWN).should('be.visible').contains('6-10').click()
-    cy.get(PASSWORD_FLD).type(DEFAULT_PASSWORD)
+    cy.assertElementVisibleAndType(EMAIL_FLD, 'user-email', NEW_SIGNUP_EMAIL)
+    cy.assertElementVisibleAndType(
+      MOBILE_NUMBER_FLD,
+      'user-mobile',
+      MOBILE_NUMBER_SIGNUP
+    )
+    cy.assertElementVisibleAndType(
+      BUSINESS_NAME_FLD,
+      'user-business-name',
+      BUSINESS_NAME_SIGNUP
+    )
+    cy.assertElementVisibleAndClick(DOWN_EMP_DROPDOWN, 'down-emp-dropwdown')
+    cy.assertElementContainsTextAndClick(EMPLOYEE_DROPDOWN, '6-10')
+    cy.assertElementVisibleAndType(
+      PASSWORD_FLD,
+      'user-password',
+      DEFAULT_PASSWORD
+    )
     cy.assertElementVisibleAndClick(LETSGO_BTN, 'lets_go_btn')
 
     // Verify that the loading spinner is displayed
@@ -111,9 +123,17 @@ describe('Create a new User to test Subscription Page', () => {
   it('should verify that user is able to subscribe to "TIME TRACKING PLAN - ANNUALY"', () => {
     // Logins the newly created user
     cy.visit(`${baseUrl}/login`)
-    cy.get(LOGIN_EMAIL_FLD).should('be.visible').type(NEW_SIGNUP_EMAIL)
-    cy.get(LOGIN_PASSWORD_FLD).type(DEFAULT_PASSWORD)
-    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-btn')
+    cy.assertElementVisibleAndType(
+      LOGIN_EMAIL_FLD,
+      'login-email-field',
+      NEW_SIGNUP_EMAIL
+    )
+    cy.assertElementVisibleAndType(
+      LOGIN_PASSWORD_FLD,
+      'login-password-field',
+      DEFAULT_PASSWORD
+    )
+    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
 
     // Verify user is able to login and navigated to Dashboard page
     cy.contains('Get Started')
@@ -121,10 +141,10 @@ describe('Create a new User to test Subscription Page', () => {
     cy.assertElementVisibleAndClick(ACTIVATE_PLAN_BTN, 'activate_plan_btn')
     cy.assertElementsAreVisible([SUBSCRIPTION_MODAL_CONTAINER])
     cy.assertElementVisibleAndClick(DOWN_PLAN_DROPDOWN, 'down_icon_dropdown')
-    cy.get(PLAN_DROPDOWN_LIST)
-      .should('be.visible')
-      .contains('Annual Time Tracking Plan')
-      .click()
+    cy.assertElementContainsTextAndClick(
+      PLAN_DROPDOWN_LIST,
+      'Annual Time Tracking Plan'
+    )
 
     // Verify user is able to enter payment card details
     cy.getStripeElement(PAYMENT_CARD_NUMBER_FLD).type(VISA_CARD)
@@ -159,9 +179,17 @@ describe('Create a new User to test Subscription Page', () => {
   it('should verify that user is successfully subscribe to "TIME TRACKING PLAN - ANNUALLY"', () => {
     // Logins the newly created user
     cy.visit(`${baseUrl}/login`)
-    cy.get(LOGIN_EMAIL_FLD).should('be.visible').type(NEW_SIGNUP_EMAIL)
-    cy.get(LOGIN_PASSWORD_FLD).type(DEFAULT_PASSWORD)
-    cy.get(LOGIN_BTN).should('be.visible').click()
+    cy.assertElementVisibleAndType(
+      LOGIN_EMAIL_FLD,
+      'login-email-field',
+      NEW_SIGNUP_EMAIL
+    )
+    cy.assertElementVisibleAndType(
+      LOGIN_PASSWORD_FLD,
+      'login-password-field',
+      DEFAULT_PASSWORD
+    )
+    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
 
     // Verify user is navigated to Plans and Billing Page"
     cy.assertElementVisibleAndClick(SETTINGS_BTN, 'settings-btn')
@@ -180,9 +208,17 @@ describe('Create a new User to test Subscription Page', () => {
   it('should verify that user has only "TIME TRACKING" features only', () => {
     // Logins the newly created user
     cy.visit(`${baseUrl}/login`)
-    cy.get(LOGIN_EMAIL_FLD).should('be.visible').type(NEW_SIGNUP_EMAIL)
-    cy.get(LOGIN_PASSWORD_FLD).type(DEFAULT_PASSWORD)
-    cy.get(LOGIN_BTN).should('be.visible').click()
+    cy.assertElementVisibleAndType(
+      LOGIN_EMAIL_FLD,
+      'login-email-field',
+      NEW_SIGNUP_EMAIL
+    )
+    cy.assertElementVisibleAndType(
+      LOGIN_PASSWORD_FLD,
+      'login-password-field',
+      DEFAULT_PASSWORD
+    )
+    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
 
     // Verify user subscribed in "TIME TRACKING" plan feature of "Timecards"
     cy.assertElementVisibleAndClick(TIMECARDS_NAV_BTN, 'timecards_btn')
@@ -227,5 +263,19 @@ describe('Create a new User to test Subscription Page', () => {
       START_30_DAY_WFM_TRIAL_BTN,
       START_30_DAY_WFM_TRIAL_MSG
     )
+  })
+})
+
+describe('DELETE delete_test_orgs', () => {
+  it('successfully deletes test organizations', () => {
+    cy.request({
+      method: 'DELETE',
+      url: 'https://staging-api1.workyard.com/delete_test_orgs',
+      headers: {
+        'x-workyard-system-tests': true
+      }
+    }).then(response => {
+      expect(response.status).to.equal(200)
+    })
   })
 })
