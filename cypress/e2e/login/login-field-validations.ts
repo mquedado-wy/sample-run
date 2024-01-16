@@ -30,9 +30,13 @@ describe('Login Page field validation', () => {
     )
 
     // Second Round of Error Field Validations
-    cy.get(LOGIN_EMAIL_FLD).type('M')
+    cy.assertElementVisibleAndType(LOGIN_EMAIL_FLD, 'login-email-field', 'M')
     cy.assertElementContainsText(LOGIN_EMAIL_ERROR_FLD, LOGIN_EMAIL_ERROR_MSG2)
-    cy.get(LOGIN_PASSWORD_FLD).type('wy')
+    cy.assertElementVisibleAndType(
+      LOGIN_PASSWORD_FLD,
+      'login-password-field',
+      'wy'
+    )
     cy.assertElementContainsText(
       LOGIN_PASSWORD_ERROR_FLD,
       LOGIN_PASSWORD_ERROR_MSG2
@@ -42,15 +46,25 @@ describe('Login Page field validation', () => {
     cy.get(LOGIN_PASSWORD_FLD).clear()
 
     // Supplying valid inputs to all fields
-    cy.get(LOGIN_EMAIL_FLD).type(UNKNOWN_USER_EMAIL)
-    cy.get(LOGIN_PASSWORD_FLD).type(DEFAULT_PASSWORD)
+    cy.assertElementVisibleAndType(
+      LOGIN_EMAIL_FLD,
+      'login-email-field',
+      UNKNOWN_USER_EMAIL
+    )
+    cy.assertElementVisibleAndType(
+      LOGIN_PASSWORD_FLD,
+      'login-password-field',
+      DEFAULT_PASSWORD
+    )
 
     // Third Round of Error Field Validations - Valid Email and Password
-    cy.get(LOGIN_EMAIL_ERROR_FLD).should('not.exist')
-    cy.get(LOGIN_PASSWORD_ERROR_FLD).should('not.exist')
+    cy.assertElementsDoNotExist([
+      LOGIN_EMAIL_ERROR_FLD,
+      LOGIN_PASSWORD_ERROR_FLD
+    ])
 
     // Fourth Round of Error Field Validations - Invalid Password
-    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-btn')
+    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
     cy.assertElementContainsText(
       LOGIN_ERROR_FLD,
       LOGIN_WRONG_USERNAME_OR_PASSWORD_MSG
