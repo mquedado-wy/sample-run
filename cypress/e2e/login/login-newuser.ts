@@ -1,9 +1,11 @@
 import {
   FIRST_LAST_NAME_FLD,
+  EMAIL_FLD,
   MOBILE_NUMBER_FLD,
   BUSINESS_NAME_FLD,
   EMPLOYEE_DROPDOWN,
   DOWN_EMP_DROPDOWN,
+  PASSWORD_FLD,
   LETSGO_BTN,
   CLOSE_TUTORIAL_BTN,
   SKIP_ONBOARDING_BTN,
@@ -38,7 +40,7 @@ describe('Verify a "newly" registered user is able to login', () => {
       cy.get(FIRST_LAST_NAME_FLD).type(finName)
     })
     cy.assertElementVisibleAndType(
-      LOGIN_EMAIL_FLD,
+      EMAIL_FLD,
       'email-field',
       NEW_SIGNUP_EMAIL_2
     )
@@ -55,7 +57,7 @@ describe('Verify a "newly" registered user is able to login', () => {
     cy.assertElementVisibleAndClick(DOWN_EMP_DROPDOWN, 'down-emp-dropwdown')
     cy.assertElementContainsTextAndClick(EMPLOYEE_DROPDOWN, '6-10')
     cy.assertElementVisibleAndType(
-      LOGIN_PASSWORD_FLD,
+      PASSWORD_FLD,
       'user-password',
       DEFAULT_PASSWORD
     )
@@ -78,15 +80,15 @@ describe('Verify a "newly" registered user is able to login', () => {
     cy.visit(`${baseUrl}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
-      'email-field',
+      'login-email-field',
       NEW_SIGNUP_EMAIL_2
     )
     cy.assertElementVisibleAndType(
       LOGIN_PASSWORD_FLD,
-      'user-password',
+      'login-user-password',
       DEFAULT_PASSWORD
     )
-    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-btn')
+    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
     // Verify user is able to login and navigated to Dashboard page
     cy.contains('Get Started')
   })
@@ -95,15 +97,15 @@ describe('Verify a "newly" registered user is able to login', () => {
     cy.intercept({ url: '**/*' }, { forceNetworkError: true })
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
-      'email-field',
+      'login-email-field',
       NEW_SIGNUP_EMAIL_2
     )
     cy.assertElementVisibleAndType(
       LOGIN_PASSWORD_FLD,
-      'user-password',
+      'login-user-password',
       DEFAULT_PASSWORD
     )
-    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-btn')
+    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
     cy.assertElementContainsText(LOGIN_ERROR_FLD, LOGIN_NO_INTERNET_ERROR_MSG)
   })
 })
