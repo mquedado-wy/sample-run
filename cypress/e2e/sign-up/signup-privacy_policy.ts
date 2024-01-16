@@ -1,113 +1,96 @@
-import {
-  FIRST_LAST_NAME_FLD,
-  EMAIL_FLD,
-  MOBILE_NUMBER_FLD,
-  BUSINESS_NAME_FLD,
-  EMPLOYEE_DROPDOWN,
-  DOWN_EMP_DROPDOWN,
-  PASSWORD_FLD,
-  LETSGO_BTN,
-  FIRST_LAST_NAME_ERROR_FLD,
-  EMAIL_ERROR_FLD,
-  MOBILE_NUMBER_ERROR_FLD,
-  BUSINESS_NAME_ERROR_FLD,
-  EMPLOYEE_DROPDOWN_ERROR_FLD,
-  PASSWORD_ERROR_FLD,
-  PASSWORD_INFO_FLD,
-  MOBILE_NUMBER_INFO_FLD
-} from '../../utilities/sign-up/signup-locators'
+describe('Verify Workyard Privacy Policy page is loaded', () => {
+  it('should visit the Workyard Privacy Policy Page', () => {
+    const TERMS_OF_USE_URL = 'https://www.workyard.com/privacy'
 
-import {
-  FIRST_LAST_NAME_ERROR_MSG1,
-  FIRST_LAST_NAME_ERROR_MSG2,
-  EMAIL_ERROR_MSG,
-  MOBILE_NUMBER_ERROR_MSG1,
-  MOBILE_NUMBER_ERROR_MSG2,
-  BUSINESS_NAME_ERROR_MSG,
-  EMPLOYEE_DROPDOWN_ERROR_MSG,
-  PASSWORD_ERROR_MSG1,
-  PASSWORD_ERROR_MSG2,
-  MOBILE_NUMBER_INFO_MSG,
-  PASSWORD_INFO_MSG,
-  DEFAULT_PASSWORD,
-  INIT_NAME,
-  NEW_SIGNUP_EMAIL,
-  MOBILE_NUMBER_SIGNUP,
-  BUSINESS_NAME_SIGNUP
-} from '../../utilities/sign-up/signup-messages-constants'
+    // Visit the webpage for TERMS OF USE
+    cy.visit(TERMS_OF_USE_URL)
 
-describe('Sign-up field validation', () => {
-  it('should allow a user to sign up successfully', () => {
-    // User is navigated to SIGN-UP page
-    const baseUrl = Cypress.env('baseUrl')
-    cy.visit(`${baseUrl}/sign_up`)
-
-    // First Round of Error Field Validations
-    cy.get(LETSGO_BTN).click()
-    cy.get(FIRST_LAST_NAME_ERROR_FLD)
-      .should('be.visible')
-      .and('contain', FIRST_LAST_NAME_ERROR_MSG1)
-    cy.get(EMAIL_ERROR_FLD).should('be.visible').and('contain', EMAIL_ERROR_MSG)
-    cy.get(MOBILE_NUMBER_ERROR_FLD)
-      .should('be.visible')
-      .and('contain', MOBILE_NUMBER_ERROR_MSG1)
-    cy.get(BUSINESS_NAME_ERROR_FLD)
-      .should('be.visible')
-      .and('contain', BUSINESS_NAME_ERROR_MSG)
-    cy.get(EMPLOYEE_DROPDOWN_ERROR_FLD)
-      .should('be.visible')
-      .and('contain', EMPLOYEE_DROPDOWN_ERROR_MSG)
-    cy.get(PASSWORD_ERROR_FLD)
-      .should('be.visible')
-      .and('contain', PASSWORD_ERROR_MSG1)
-
-    // Second Round of Error Field Validations
-    cy.get(FIRST_LAST_NAME_FLD).type('M')
-    cy.get(FIRST_LAST_NAME_ERROR_FLD)
-      .should('be.visible')
-      .and('contain', FIRST_LAST_NAME_ERROR_MSG2)
-    cy.get(MOBILE_NUMBER_FLD).type('+1')
-    cy.get(MOBILE_NUMBER_ERROR_FLD)
-      .should('be.visible')
-      .and('contain', MOBILE_NUMBER_ERROR_MSG2)
-    cy.get(PASSWORD_FLD).type('wy')
-    cy.get(PASSWORD_ERROR_FLD)
-      .should('be.visible')
-      .and('contain', PASSWORD_ERROR_MSG2)
-
-    cy.get(FIRST_LAST_NAME_FLD).clear()
-    cy.get(MOBILE_NUMBER_FLD).clear()
-    cy.get(PASSWORD_FLD).clear()
-
-    // Supplying valid inputs to all fields
-    cy.genRandomString(6).then(randomString => {
-      const finName = INIT_NAME + randomString
-      cy.get(FIRST_LAST_NAME_FLD).type(finName)
-    })
-
-    cy.get(EMAIL_FLD).type(NEW_SIGNUP_EMAIL)
-
-    cy.get(MOBILE_NUMBER_FLD).type(MOBILE_NUMBER_SIGNUP)
-
-    cy.get(BUSINESS_NAME_FLD).type(BUSINESS_NAME_SIGNUP)
-
-    cy.get(DOWN_EMP_DROPDOWN).should('be.visible').click()
-    cy.get(EMPLOYEE_DROPDOWN).should('be.visible').contains('6-10').click()
-    cy.get(PASSWORD_FLD).type(DEFAULT_PASSWORD)
-
-    // Third Round of Error Field Validations
-    cy.get(FIRST_LAST_NAME_ERROR_FLD).should('not.exist')
-    cy.get(EMAIL_ERROR_FLD).should('not.exist')
-    cy.get(MOBILE_NUMBER_ERROR_FLD).should('not.exist')
-    cy.get(BUSINESS_NAME_ERROR_FLD).should('not.exist')
-    cy.get(EMPLOYEE_DROPDOWN_ERROR_FLD).should('not.exist')
-
-    // Verifying of Info Messages Displayed
-    cy.get(MOBILE_NUMBER_INFO_FLD)
-      .should('be.visible')
-      .and('contain', MOBILE_NUMBER_INFO_MSG)
-    cy.get(PASSWORD_INFO_FLD)
-      .should('be.visible')
-      .and('contain', PASSWORD_INFO_MSG)
+    cy.assertScrollIntoViewElementContainsText(
+      'h1',
+      'Workyard Privacy Policy',
+      'Workyard Privacy Policy'
+    )
+    cy.assertScrollIntoViewElementContainsText(
+      'p',
+      'Last Updated 9/15/2020',
+      'Last Updated 9/15/2020'
+    )
+    cy.assertScrollIntoViewElementContainsText(
+      'h2',
+      'Purpose of Our Policy',
+      'Purpose of Our Policy'
+    )
+    cy.assertScrollIntoViewElementContainsText(
+      'h2',
+      'Personal Information We Collect',
+      'Personal Information We Collect'
+    )
+    cy.assertScrollIntoViewElementContainsText(
+      'h2',
+      'How Personal Information Is Collected',
+      'How Personal Information Is Collected'
+    )
+    cy.assertScrollIntoViewElementContainsText(
+      'h2',
+      'How Personal Information Is Used and Disclosed',
+      'How Personal Information Is Used and Disclosed'
+    )
+    cy.assertScrollIntoViewElementContainsText(
+      'h2',
+      'Cookies and Other Tracking Technologies',
+      'Cookies and Other Tracking Technologies'
+    )
+    cy.assertScrollIntoViewElementContainsText(
+      'h2',
+      'Your Choices',
+      'Your Choices'
+    )
+    cy.assertScrollIntoViewElementContainsText('h2', 'Security', 'Security')
+    cy.assertScrollIntoViewElementContainsText(
+      'h2',
+      'Your Rights',
+      'Your Rights'
+    )
+    cy.assertScrollIntoViewElementContainsText(
+      'h2',
+      'California Privacy Rights',
+      'California Privacy Rights'
+    )
+    cy.assertScrollIntoViewElementContainsText(
+      'h2',
+      'Do Not Track',
+      'Do Not Track'
+    )
+    cy.assertScrollIntoViewElementContainsText(
+      'h2',
+      'Complaints & Disputes',
+      'Complaints & Disputes'
+    )
+    cy.assertScrollIntoViewElementContainsText('h2', 'Children', 'Children')
+    cy.assertScrollIntoViewElementContainsText(
+      'h2',
+      'Third-Party Links',
+      'Third-Party Links'
+    )
+    cy.assertScrollIntoViewElementContainsText(
+      'h2',
+      'No Rights Of Third Parties',
+      'No Rights Of Third Parties'
+    )
+    cy.assertScrollIntoViewElementContainsText(
+      'h2',
+      'How We Communicate With You',
+      'How We Communicate With You'
+    )
+    cy.assertScrollIntoViewElementContainsText(
+      'h2',
+      'Contacting Us',
+      'Contacting Us'
+    )
+    cy.assertScrollIntoViewElementContainsText(
+      'h2',
+      'Changes To This Privacy Policy',
+      'Changes To This Privacy Policy'
+    )
   })
 })
