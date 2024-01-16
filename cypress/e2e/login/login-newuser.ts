@@ -1,11 +1,9 @@
 import {
   FIRST_LAST_NAME_FLD,
-  EMAIL_FLD,
   MOBILE_NUMBER_FLD,
   BUSINESS_NAME_FLD,
   EMPLOYEE_DROPDOWN,
   DOWN_EMP_DROPDOWN,
-  PASSWORD_FLD,
   LETSGO_BTN,
   CLOSE_TUTORIAL_BTN,
   SKIP_ONBOARDING_BTN,
@@ -39,13 +37,28 @@ describe('Verify a "newly" registered user is able to login', () => {
       const finName = INIT_NAME + randomString
       cy.get(FIRST_LAST_NAME_FLD).type(finName)
     })
-    cy.get(EMAIL_FLD).type(NEW_SIGNUP_EMAIL_2)
-    cy.get(MOBILE_NUMBER_FLD).type(MOBILE_NUMBER_LOGIN)
-    cy.get(BUSINESS_NAME_FLD).type(BUSINESS_NAME_LOGIN)
-
-    cy.get(DOWN_EMP_DROPDOWN).should('be.visible').click()
-    cy.get(EMPLOYEE_DROPDOWN).should('be.visible').contains('6-10').click()
-    cy.get(PASSWORD_FLD).type(DEFAULT_PASSWORD)
+    cy.assertElementVisibleAndType(
+      LOGIN_EMAIL_FLD,
+      'email-field',
+      NEW_SIGNUP_EMAIL_2
+    )
+    cy.assertElementVisibleAndType(
+      MOBILE_NUMBER_FLD,
+      'mobile-field',
+      MOBILE_NUMBER_LOGIN
+    )
+    cy.assertElementVisibleAndType(
+      BUSINESS_NAME_FLD,
+      'business-field',
+      BUSINESS_NAME_LOGIN
+    )
+    cy.assertElementVisibleAndClick(DOWN_EMP_DROPDOWN, 'down-emp-dropwdown')
+    cy.assertElementContainsTextAndClick(EMPLOYEE_DROPDOWN, '6-10')
+    cy.assertElementVisibleAndType(
+      LOGIN_PASSWORD_FLD,
+      'user-password',
+      DEFAULT_PASSWORD
+    )
     cy.assertElementVisibleAndClick(LETSGO_BTN, 'lets_go_btn')
 
     // Verify that the loading spinner is displayed
@@ -63,8 +76,16 @@ describe('Verify a "newly" registered user is able to login', () => {
 
   it('should login the newly created user', () => {
     cy.visit(`${baseUrl}/login`)
-    cy.get(LOGIN_EMAIL_FLD).should('be.visible').type(NEW_SIGNUP_EMAIL_2)
-    cy.get(LOGIN_PASSWORD_FLD).type(DEFAULT_PASSWORD)
+    cy.assertElementVisibleAndType(
+      LOGIN_EMAIL_FLD,
+      'email-field',
+      NEW_SIGNUP_EMAIL_2
+    )
+    cy.assertElementVisibleAndType(
+      LOGIN_PASSWORD_FLD,
+      'user-password',
+      DEFAULT_PASSWORD
+    )
     cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-btn')
     // Verify user is able to login and navigated to Dashboard page
     cy.contains('Get Started')
@@ -72,9 +93,31 @@ describe('Verify a "newly" registered user is able to login', () => {
   it('should handle no network connectivitiy', () => {
     cy.visit(`${baseUrl}/login`)
     cy.intercept({ url: '**/*' }, { forceNetworkError: true })
-    cy.get(LOGIN_EMAIL_FLD).should('be.visible').type(NEW_SIGNUP_EMAIL_2)
-    cy.get(LOGIN_PASSWORD_FLD).type(DEFAULT_PASSWORD)
+    cy.assertElementVisibleAndType(
+      LOGIN_EMAIL_FLD,
+      'email-field',
+      NEW_SIGNUP_EMAIL_2
+    )
+    cy.assertElementVisibleAndType(
+      LOGIN_PASSWORD_FLD,
+      'user-password',
+      DEFAULT_PASSWORD
+    )
     cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-btn')
     cy.assertElementContainsText(LOGIN_ERROR_FLD, LOGIN_NO_INTERNET_ERROR_MSG)
+  })
+})
+
+describe('DELETE delete_test_orgs', () => {
+  it('successfully deletes test organizations', () => {
+    cy.request({
+      method: 'DELETE',
+      url: 'https://staging-api1.workyard.com/delete_test_orgs',
+      headers: {
+        'x-workyard-system-tests': true
+      }
+    }).then(response => {
+      expect(response.status).to.equal(200)
+    })
   })
 })
