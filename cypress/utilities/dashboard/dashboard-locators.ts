@@ -1,12 +1,12 @@
 // DASHBOARD LANDING PAGE LOCATORS
 export const USER_INFO_MENU = 'span[data-testid="navbar_user-info"]'
 export const LOGOUT_BUTTON = 'div[data-testid="navbar_logout"]'
-export const SETTINGS_BTN = 'div:nth-child(2) > span > svg'
-export const SETTINGS_MAINDIV = 'div[class="Menu__WrapperStyled-sc-11m6qg8-0 isIHVe LoggedInNavbarstyled__SettingsMenu-zwvib0-8 gpXekz"]'
-export const PLANS_AND_BILLING_BTN = 'div.LoggedInNavbarstyled__RightItemsStyled-zwvib0-1.hxzcMD > div:nth-child(2) > div > div:first-child'
-export const PERSONAL_BTN = 'div.LoggedInNavbarstyled__RightItemsStyled-zwvib0-1.hxzcMD > div:nth-child(2) > div > div:first-child'
-export const ORGANIZATION_BTN = 'div.LoggedInNavbarstyled__RightItemsStyled-zwvib0-1.hxzcMD > div:nth-child(2) > div > div:last-child'
-export const WEB_PAGE_TITLE_HEADER = 'div[class="PageTitlestyled__Wrapper-sc-7zgmci-0 ckpoLr pl-6"]'
+export const SETTINGS_BTN = 'div[data-testid="navbar_settings"]'
+export const SETTINGS_MAINDIV = 'div[data-testid="navbar_settings-wrapper"]'
+export const PLANS_AND_BILLING_BTN = 'div[data-testid="plans-billing-setting-item"]'
+export const PERSONAL_BTN = 'div[data-testid="personal-setting-item"]'
+export const ORGANIZATION_BTN = 'div[data-testid="organization-setting-item"]'
+export const WEB_PAGE_TITLE_HEADER = 'div[data-testid="page-title"]'
 
 // DASHBOARD SIDE-PANE NAVIGATION LOCATORS
 export const DASHBOARD_NAV_BTN = 'a[data-testid="menu_dashboard-item"]'
