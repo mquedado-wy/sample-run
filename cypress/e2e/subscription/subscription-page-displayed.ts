@@ -64,26 +64,34 @@ describe('Create a new User to test Subscription Page', () => {
       cy.get(FIRST_LAST_NAME_FLD).type(finName)
     })
 
-    cy.get(EMAIL_FLD).type(NEW_SIGNUP_EMAIL)
-    cy.get(MOBILE_NUMBER_FLD).type(MOBILE_NUMBER_SIGNUP)
-    cy.get(BUSINESS_NAME_FLD).type(BUSINESS_NAME_SIGNUP)
-    cy.get(DOWN_EMP_DROPDOWN).should('be.visible').click()
-    cy.get(EMPLOYEE_DROPDOWN).should('be.visible').contains('6-10').click()
-    cy.get(PASSWORD_FLD).type(DEFAULT_PASSWORD)
-
-    cy.get(LETSGO_BTN).should('be.visible').click()
+    cy.assertElementVisibleAndType(EMAIL_FLD, 'user-email', NEW_SIGNUP_EMAIL)
+    cy.assertElementVisibleAndType(
+      MOBILE_NUMBER_FLD,
+      'user-mobile',
+      MOBILE_NUMBER_SIGNUP
+    )
+    cy.assertElementVisibleAndType(
+      BUSINESS_NAME_FLD,
+      'user-business-name',
+      BUSINESS_NAME_SIGNUP
+    )
+    cy.assertElementVisibleAndClick(DOWN_EMP_DROPDOWN, 'down-emp-dropwdown')
+    cy.assertElementContainsTextAndClick(EMPLOYEE_DROPDOWN, '6-10')
+    cy.assertElementVisibleAndType(
+      PASSWORD_FLD,
+      'user-password',
+      DEFAULT_PASSWORD
+    )
+    cy.assertElementVisibleAndClick(LETSGO_BTN, 'letsgo-button')
 
     // Verify that the loading spinner is displayed
-    cy.get(LOADING_SPINNER).should('be.visible')
+    cy.assertElementsAreVisible([LOADING_SPINNER])
     // This is to wait for the loading spinner to be not visible before proceeding with the next action
-    cy.get(LOADING_SPINNER).should('not.exist')
+    cy.assertElementsDoNotExist([LOADING_SPINNER])
 
     // User Account is expected to be created and User is navigated to Dashboard page
-    cy.get(SKIP_ONBOARDING_BTN).should('be.visible').as('skipbtn')
-    cy.get('@skipbtn').click()
-    cy.get(CLOSE_TUTORIAL_BTN).should('be.visible').as('closebtn')
-    cy.get('@closebtn').click()
-
+    cy.assertElementVisibleAndClick(SKIP_ONBOARDING_BTN, 'skip-btn')
+    cy.assertElementVisibleAndClick(CLOSE_TUTORIAL_BTN, 'close-btn')
     // Verify user is navigated in Dashboard page
     cy.contains('Get Started')
   })
@@ -91,47 +99,67 @@ describe('Create a new User to test Subscription Page', () => {
   it('should verify that all "Subscription" fields,labels and headers are displayed', () => {
     // Logins the newly created user
     cy.visit(`${baseUrl}/login`)
-    cy.get(LOGIN_EMAIL_FLD).should('be.visible').type(NEW_SIGNUP_EMAIL)
-    cy.get(LOGIN_PASSWORD_FLD).type(DEFAULT_PASSWORD)
-    cy.get(LOGIN_BTN).should('be.visible').click()
+    cy.assertElementVisibleAndType(
+      LOGIN_EMAIL_FLD,
+      'login-email-field',
+      NEW_SIGNUP_EMAIL
+    )
+    cy.assertElementVisibleAndType(
+      LOGIN_PASSWORD_FLD,
+      'login-password-field',
+      DEFAULT_PASSWORD
+    )
+    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
 
     // Verify user is able to login and navigated to Dashboard page
     cy.contains('Get Started')
 
-    cy.get(ACTIVATE_PLAN_BTN).should('be.visible').as('activate_plan_btn')
-    cy.get('@activate_plan_btn').click()
-    cy.get(SUBSCRIPTION_MODAL_CONTAINER).should('be.visible')
-    cy.get(SUBSCRIBE_HDR)
-      .should('be.visible')
-      .and('contain', SUBSCRIPTION_HDR_MSG)
-    cy.get(PLAN_LBL1).should('be.visible')
-    cy.get(PLAN_DROPDOWN).should('be.visible')
+    cy.assertElementVisibleAndClick(ACTIVATE_PLAN_BTN, 'activate_plan_btn')
+    cy.assertElementsAreVisible([SUBSCRIPTION_MODAL_CONTAINER])
+    cy.assertElementContainsText(SUBSCRIBE_HDR, SUBSCRIPTION_HDR_MSG)
+    cy.assertElementsAreVisible([PLAN_LBL1, PLAN_DROPDOWN]).should('be.visible')
     cy.assertScrollIntoViewElementContainsText(
       SUBSCRIPTION_PLAN_FLD,
       MONTHLY_SUBCRIPTION_MSG,
       MONTHLY_SUBCRIPTION_MSG
     )
-    cy.get(DOWN_PLAN_DROPDOWN).should('be.visible').click()
-    cy.get(PLAN_DROPDOWN_LIST)
-      .should('be.visible')
-      .contains('Annual Time Tracking Plan')
-      .click()
+    cy.assertElementVisibleAndClick(DOWN_PLAN_DROPDOWN, 'down-plan-dropdown')
+    cy.assertElementContainsTextAndClick(
+      PLAN_DROPDOWN_LIST,
+      'Annual Time Tracking Plan'
+    )
     cy.assertScrollIntoViewElementContainsText(
       SUBSCRIPTION_PLAN_FLD,
       ANNUAL_SUBCRIPTION_MSG,
       ANNUAL_SUBCRIPTION_MSG
     )
-    cy.get(PLAN_LBL2).scrollIntoView().should('be.visible')
-    cy.get(PLAN_SUMMARY1).scrollIntoView().should('be.visible')
-    cy.get(PLAN_SUMMARY2).scrollIntoView().should('be.visible')
-    cy.get(APPLY_COUPON).scrollIntoView().should('be.visible')
-    cy.get(DUE_NOW_HDR).should('be.visible')
-    cy.get(CREDIT_CARD_FLD).should('be.visible')
-    cy.get(SUBSCRIBE_BTN).should('be.visible')
-    cy.get(AGREE_TERMS_OF_SERVICE)
-      .scrollIntoView()
-      .should('be.visible')
-      .and('contain', AGREE_TERMS_OF_SERVICE_MSG)
-    cy.contains('button', 'Terms of service').should('be.visible')
+    cy.assertScrollIntoViewElementsAreVisible([
+      PLAN_LBL2,
+      PLAN_SUMMARY1,
+      PLAN_SUMMARY2,
+      APPLY_COUPON,
+      DUE_NOW_HDR,
+      CREDIT_CARD_FLD,
+      SUBSCRIBE_BTN
+    ])
+
+    cy.assertScrollIntoViewElementIsVisible(AGREE_TERMS_OF_SERVICE).contains(
+      AGREE_TERMS_OF_SERVICE_MSG
+    )
+    cy.assertElementContainsText('button', 'Terms of service')
+  })
+})
+
+describe('DELETE delete_test_orgs', () => {
+  it('successfully deletes test organizations', () => {
+    cy.request({
+      method: 'DELETE',
+      url: 'https://staging-api1.workyard.com/delete_test_orgs',
+      headers: {
+        'x-workyard-system-tests': true
+      }
+    }).then(response => {
+      expect(response.status).to.equal(200)
+    })
   })
 })
