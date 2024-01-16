@@ -19,16 +19,19 @@ declare namespace Cypress {
       expectedAttr: string,
       expectedAttrValue: string
     ): Chainable
-    assertScrollIntoViewElementIsVisible(
-      selector: string
-    ): Chainable
+    assertScrollIntoViewElementIsVisible(selector: string): Chainable
     assertElementVisibleAndClick(selector: string, aliasName: string): Chainable
-    assertElementVisibleAndType(selector: string, aliasName: string, userInputnput: string): Chainable
+    assertElementVisibleAndType(
+      selector: string,
+      aliasName: string,
+      userInputnput: string
+    ): Chainable
     assertStringsInElement(
       elementSelector: string,
       expectedStrings: string[]
     ): Chainable<Element>
     assertElementNotContainText(selector: string, text: string): Chainable
+    assertScrollIntoViewElementsAreVisible(selectors: string[]): Chainable
   }
 }
 Cypress.Commands.add('genRandomString', (length: number) => {
@@ -110,7 +113,11 @@ Cypress.Commands.add(
 Cypress.Commands.add(
   'assertElementVisibleAndType',
   (selector: string, aliasName: string, userInput: string) => {
-    cy.get(selector).should('exist').should('be.visible').as(aliasName).type(userInput)
+    cy.get(selector)
+      .should('exist')
+      .should('be.visible')
+      .as(aliasName)
+      .type(userInput)
   }
 )
 
@@ -146,7 +153,12 @@ Cypress.Commands.add(
 
 Cypress.Commands.add(
   'assertScrollIntoViewElementHaveAttr',
-  (selector: string, text: string, expectedAttr: string, expectedAttrValue: string) => {
+  (
+    selector: string,
+    text: string,
+    expectedAttr: string,
+    expectedAttrValue: string
+  ) => {
     cy.contains(selector, text)
       .scrollIntoView()
       .should('be.visible')
@@ -157,8 +169,15 @@ Cypress.Commands.add(
 Cypress.Commands.add(
   'assertScrollIntoViewElementIsVisible',
   (selector: string) => {
-    cy.get(selector)
-      .scrollIntoView()
-      .should('be.visible')
+    cy.get(selector).scrollIntoView().should('be.visible')
+  }
+)
+
+Cypress.Commands.add(
+  'assertScrollIntoViewElementsAreVisible',
+  (selectors: string[]) => {
+    selectors.forEach(selector => {
+      cy.get(selector).scrollIntoView().should('be.visible')
+    })
   }
 )
