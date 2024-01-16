@@ -1,6 +1,6 @@
 // SIGN-UP FIELD HEADERS
 export const FIRST_LAST_NAME_LBL = 'label[data-testid=name-label]'
-export const EMAIL_LBL = 'label[id=email-label]'
+export const EMAIL_LBL = 'label[data-testid="email-label"]'
 export const MOBILE_NUMBER_LBL = 'label[data-testid=mobile-label]'
 export const BUSINESS_NAME_LBL = 'label[data-testid=business_name-label'
 export const EMPLOYEE_DROPDOWN_LBL = 'label[data-testid=num_of_employees-label]'
@@ -11,7 +11,7 @@ export const FIRST_LAST_NAME_FLD = 'input[data-testid=name-field]'
 export const EMAIL_FLD = 'input[data-testid=email-field]'
 export const MOBILE_NUMBER_FLD = 'input[data-testid=mobile-field]'
 export const BUSINESS_NAME_FLD = 'input[data-testid=business_name-field]'
-export const EMPLOYEE_DROPDOWN = 'li.indexes__SelectListButtonStyled-sc-1su5p0r-107'
+export const EMPLOYEE_DROPDOWN = 'ul[data-testid="desktop-option-list"]'
 export const DOWN_EMP_DROPDOWN = '[data-testid="svg_DownChevron"]'
 export const PASSWORD_FLD = 'input[data-testid="password-field"]'
 
