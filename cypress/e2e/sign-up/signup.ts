@@ -33,15 +33,23 @@ describe('Verify User Signs up for a 14-day Trial Period', () => {
     })
 
     cy.assertElementVisibleAndType(EMAIL_FLD, 'user-email', NEW_SIGNUP_EMAIL)
-
-    cy.assertElementVisibleAndType(MOBILE_NUMBER_FLD, 'user-mobile', MOBILE_NUMBER_SIGNUP)
-
-    cy.assertElementVisibleAndType(BUSINESS_NAME_FLD, 'user-business-name', BUSINESS_NAME_SIGNUP)
-
+    cy.assertElementVisibleAndType(
+      MOBILE_NUMBER_FLD,
+      'user-mobile',
+      MOBILE_NUMBER_SIGNUP
+    )
+    cy.assertElementVisibleAndType(
+      BUSINESS_NAME_FLD,
+      'user-business-name',
+      BUSINESS_NAME_SIGNUP
+    )
     cy.assertElementVisibleAndClick(DOWN_EMP_DROPDOWN, 'down-emp-dropwdown')
     cy.assertElementContainsTextAndClick(EMPLOYEE_DROPDOWN, '6-10')
-    // cy.get(EMPLOYEE_DROPDOWN).should('be.visible').contains('6-10').click()
-    cy.assertElementVisibleAndType(PASSWORD_FLD, 'user-password', DEFAULT_PASSWORD)
+    cy.assertElementVisibleAndType(
+      PASSWORD_FLD,
+      'user-password',
+      DEFAULT_PASSWORD
+    )
 
     // Temporarily simulating no internet connection
     cy.window().then(win => {
@@ -71,9 +79,8 @@ describe('DELETE delete_test_orgs', () => {
       url: 'https://staging-api1.workyard.com/delete_test_orgs',
       headers: {
         'x-workyard-system-tests': true
-
       }
-    }).then((response) => {
+    }).then(response => {
       expect(response.status).to.equal(200)
     })
   })
