@@ -37,43 +37,55 @@ import {
 } from '../../utilities/sign-up/signup-messages-constants'
 
 describe('Sign-up field validation', () => {
-  it('should allow a user to sign up successfully', () => {
+  it('should able to verify sign-up field error validations', () => {
     // User is navigated to SIGN-UP page
     const baseUrl = Cypress.env('baseUrl')
     cy.visit(`${baseUrl}/sign_up`)
 
     // First Round of Error Field Validations
     cy.get(LETSGO_BTN).click()
-    cy.get(FIRST_LAST_NAME_ERROR_FLD)
-      .should('be.visible')
-      .and('contain', FIRST_LAST_NAME_ERROR_MSG1)
-    cy.get(EMAIL_ERROR_FLD).should('be.visible').and('contain', EMAIL_ERROR_MSG)
-    cy.get(MOBILE_NUMBER_ERROR_FLD)
-      .should('be.visible')
-      .and('contain', MOBILE_NUMBER_ERROR_MSG1)
-    cy.get(BUSINESS_NAME_ERROR_FLD)
-      .should('be.visible')
-      .and('contain', BUSINESS_NAME_ERROR_MSG)
-    cy.get(EMPLOYEE_DROPDOWN_ERROR_FLD)
-      .should('be.visible')
-      .and('contain', EMPLOYEE_DROPDOWN_ERROR_MSG)
-    cy.get(PASSWORD_ERROR_FLD)
-      .should('be.visible')
-      .and('contain', PASSWORD_ERROR_MSG1)
+    cy.assertElementContainsText(
+      FIRST_LAST_NAME_ERROR_FLD,
+      FIRST_LAST_NAME_ERROR_MSG1
+    )
+    cy.assertElementContainsText(EMAIL_ERROR_FLD, EMAIL_ERROR_MSG)
+    cy.assertElementContainsText(
+      MOBILE_NUMBER_ERROR_FLD,
+      MOBILE_NUMBER_ERROR_MSG1
+    )
+    cy.assertElementContainsText(
+      BUSINESS_NAME_ERROR_FLD,
+      BUSINESS_NAME_ERROR_MSG
+    )
+    cy.assertElementContainsText(
+      EMPLOYEE_DROPDOWN_ERROR_FLD,
+      EMPLOYEE_DROPDOWN_ERROR_MSG
+    )
+    cy.assertElementContainsText(PASSWORD_ERROR_FLD, PASSWORD_ERROR_MSG1)
 
     // Second Round of Error Field Validations
-    cy.get(FIRST_LAST_NAME_FLD).type('M')
-    cy.get(FIRST_LAST_NAME_ERROR_FLD)
-      .should('be.visible')
-      .and('contain', FIRST_LAST_NAME_ERROR_MSG2)
-    cy.get(MOBILE_NUMBER_FLD).type('+1')
-    cy.get(MOBILE_NUMBER_ERROR_FLD)
-      .should('be.visible')
-      .and('contain', MOBILE_NUMBER_ERROR_MSG2)
-    cy.get(PASSWORD_FLD).type('wy')
-    cy.get(PASSWORD_ERROR_FLD)
-      .should('be.visible')
-      .and('contain', PASSWORD_ERROR_MSG2)
+    cy.assertElementVisibleAndType(
+      FIRST_LAST_NAME_FLD,
+      'first-and-last-name',
+      'M'
+    ).type('M')
+    cy.assertElementContainsText(
+      FIRST_LAST_NAME_ERROR_FLD,
+      FIRST_LAST_NAME_ERROR_MSG2
+    )
+
+    cy.assertElementVisibleAndType(
+      MOBILE_NUMBER_FLD,
+      'mobile-number-invalid',
+      '+1'
+    )
+    cy.assertElementContainsText(
+      MOBILE_NUMBER_ERROR_FLD,
+      MOBILE_NUMBER_ERROR_MSG2
+    )
+
+    cy.assertElementVisibleAndType(PASSWORD_FLD, 'password-invalid', 'wy')
+    cy.assertElementContainsText(PASSWORD_ERROR_FLD, PASSWORD_ERROR_MSG2)
 
     cy.get(FIRST_LAST_NAME_FLD).clear()
     cy.get(MOBILE_NUMBER_FLD).clear()
@@ -84,30 +96,36 @@ describe('Sign-up field validation', () => {
       const finName = INIT_NAME + randomString
       cy.get(FIRST_LAST_NAME_FLD).type(finName)
     })
-
-    cy.get(EMAIL_FLD).type(NEW_SIGNUP_EMAIL)
-
-    cy.get(MOBILE_NUMBER_FLD).type(MOBILE_NUMBER_SIGNUP)
-
-    cy.get(BUSINESS_NAME_FLD).type(BUSINESS_NAME_SIGNUP)
-
-    cy.get(DOWN_EMP_DROPDOWN).should('be.visible').click()
-    cy.get(EMPLOYEE_DROPDOWN).should('be.visible').contains('6-10').click()
-    cy.get(PASSWORD_FLD).type(DEFAULT_PASSWORD)
+    cy.assertElementVisibleAndType(EMAIL_FLD, 'email-field', NEW_SIGNUP_EMAIL)
+    cy.assertElementVisibleAndType(
+      MOBILE_NUMBER_FLD,
+      'mobile-field',
+      MOBILE_NUMBER_SIGNUP
+    )
+    cy.assertElementVisibleAndType(
+      BUSINESS_NAME_FLD,
+      'business-field',
+      BUSINESS_NAME_SIGNUP
+    )
+    cy.assertElementVisibleAndClick(DOWN_EMP_DROPDOWN, 'down-emp-dropwdown')
+    cy.assertElementContainsTextAndClick(EMPLOYEE_DROPDOWN, '6-10')
+    cy.assertElementVisibleAndType(
+      PASSWORD_FLD,
+      'password-field',
+      DEFAULT_PASSWORD
+    )
 
     // Third Round of Error Field Validations
-    cy.get(FIRST_LAST_NAME_ERROR_FLD).should('not.exist')
-    cy.get(EMAIL_ERROR_FLD).should('not.exist')
-    cy.get(MOBILE_NUMBER_ERROR_FLD).should('not.exist')
-    cy.get(BUSINESS_NAME_ERROR_FLD).should('not.exist')
-    cy.get(EMPLOYEE_DROPDOWN_ERROR_FLD).should('not.exist')
+    cy.assertElementsDoNotExist([
+      FIRST_LAST_NAME_ERROR_FLD,
+      EMAIL_ERROR_FLD,
+      MOBILE_NUMBER_ERROR_FLD,
+      BUSINESS_NAME_ERROR_FLD,
+      EMPLOYEE_DROPDOWN_ERROR_FLD
+    ])
 
     // Verifying of Info Messages Displayed
-    cy.get(MOBILE_NUMBER_INFO_FLD)
-      .should('be.visible')
-      .and('contain', MOBILE_NUMBER_INFO_MSG)
-    cy.get(PASSWORD_INFO_FLD)
-      .should('be.visible')
-      .and('contain', PASSWORD_INFO_MSG)
+    cy.assertElementContainsText(MOBILE_NUMBER_INFO_FLD, MOBILE_NUMBER_INFO_MSG)
+    cy.assertElementContainsText(PASSWORD_INFO_FLD, PASSWORD_INFO_MSG)
   })
 })
