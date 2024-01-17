@@ -33,7 +33,7 @@ import {
   PAYMENT_CVC_FLD,
   PAYMENT_EXP_DATE_FLD,
   PAYMENT_POSTAL_FLD,
-  PLAN_DROPDOWN_LIST,
+  PLAN_DROPDOWN_OPTIONS,
   START_30_DAY_WFM_TRIAL_BTN,
   SUBSCRIBE_BTN,
   SUBSCRIPTION_MODAL_CONTAINER,
@@ -142,7 +142,7 @@ describe('Create a new User to test Subscription Page', () => {
     cy.assertElementsAreVisible([SUBSCRIPTION_MODAL_CONTAINER])
     cy.assertElementVisibleAndClick(DOWN_PLAN_DROPDOWN, 'down_icon_dropdown')
     cy.assertElementContainsTextAndClick(
-      PLAN_DROPDOWN_LIST,
+      PLAN_DROPDOWN_OPTIONS,
       'Annual Time Tracking Plan'
     )
 
