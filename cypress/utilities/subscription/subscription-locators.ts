@@ -13,7 +13,7 @@ export const SUCCESSFUL_SUBSCRIPTION_PROMPT = 'div[class="indexes__Content-sc-1s
 
 // SUBSCRIPTION HEADERS and LABELS
 export const SUBSCRIBE_HDR = 'div[data-testid="modal-header"]'
-export const PLAN_LBL1 = 'label[id="undefined-label"]'
+export const PLAN_LBL1 = 'label[data-testid="undefined-label"]'
 export const PLAN_LBL2 = 'div[class="plan-billing-detailsstyled__SubText-sc-16v5pq1-5 gtbPQO"]'
 export const DUE_NOW_HDR = 'div[class="plan-billing-detailsstyled__DueNowText-sc-16v5pq1-12 ecMeAf"]'
 export const CREDIT_CARD_FLD = 'div[class="StripeElement StripeElement--empty"]'
@@ -21,7 +21,7 @@ export const AGREE_TERMS_OF_SERVICE = 'form > div.flex.gap-1'
 
 // SUBSCRIPTION BUTTONS
 export const ACTIVATE_PLAN_BTN = 'button[data-testid="activate-now-button-get-started"]'
-export const AUTOFILL_LINK_BTN = 'div[class="ButtonContainer ButtonContainer--pay"]'
+export const AUTOFILL_LINK_BTN = 'button[id="link-pay"]'
 export const SUBSCRIBE_BTN = 'button[data-testid="subscribe-button"]'
 export const TERMS_OF_SERVICE_BTN = 'button[class="indexes__ButtonLinkStyled-sc-1su5p0r-101 bqkkvC"]'
 export const SUBS_CLOSE_BTN = 'svg[data-testid="close-modal"]'
@@ -40,7 +40,7 @@ export const START_30_DAY_WFM_TRIAL_BTN = 'button[data-testid="start-free-trial-
 // TRIAL EXPIRED LOCATORS
 export const TRIAL_EXPIRED_FLD1 = 'div[class="billing-modalstyled__Header-sc-5pr1p6-0 kIdras"]'
 export const TRIAL_EXPIRED_FLD2 = 'div.billing-modalstyled__HeaderSection-sc-5pr1p6-1.gPySkD > div:nth-child(2)'
-export const TRIAL_EXPIRED_DIV_OVERLAY = 'div[id="billing-modal"]'
+export const TRIAL_EXPIRED_DIV_OVERLAY = 'div[data-testid="modal-overlay"]'
 export const TRIAL_EXPIRED_DAYS_LEFT = '#get-started-banner > div > div:nth-child(1) > strong'
 export const TRIAL_EXPIRED_DAYS_LEFT2 = '#get-started-banner > div > div:nth-child(1)'
 export const TRIAL_EXPIRED_WANT_HELP = '#get-started-banner > div > div:nth-child(3)'
