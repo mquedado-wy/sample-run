@@ -2,19 +2,18 @@ name: Daily Cypress Tests
 
 on:
   schedule:
-    - cron: '50 06 * * *'
+    - cron: '35 07 * * *'
 jobs:
   run-cypress-tests:
     runs-on: ubuntu-latest
-
-    env:
-      TZ: Asia/Manila
-      CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2]
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
@@ -25,9 +24,9 @@ jobs:
       run: npm install
 
     - name: Run Cypress Tests
-      uses: cypress-io/github-action@v3
+      uses: cypress-io/github-action@v6
       with:
-        run: npx cypress run --record
+        start: npm start
         wait-on: 'http://localhost:3000'
         record: true
         parallel: true
