@@ -148,18 +148,8 @@ describe('Create a new User to test Subscription Page', () => {
     )
     cy.assertElementContainsText('button', 'Terms of service')
   })
-})
-
-describe('DELETE delete_test_orgs', () => {
-  it('successfully deletes test organizations', () => {
-    cy.request({
-      method: 'DELETE',
-      url: 'https://staging-api1.workyard.com/delete_test_orgs',
-      headers: {
-        'x-workyard-system-tests': true
-      }
-    }).then(response => {
-      expect(response.status).to.equal(200)
-    })
+  after(() => {
+    // This is to clean-up the test organization and its related data associated with it
+    cy.testDataCleanUp()
   })
 })
