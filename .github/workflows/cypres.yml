@@ -2,14 +2,12 @@ name: Daily Cypress Tests
 
 on:
   schedule:
-    - cron: '50 07 * * *'
+    - cron: '30 08 * * *'
 jobs:
   run-cypress-tests:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        containers: [1]
 
     steps:
     - name: Checkout Code
@@ -21,15 +19,14 @@ jobs:
         node-version: '20'  
 
     - name: Install Dependencies
-      run: npm install
+      run: npm ci
 
     - name: Run Cypress Tests
-      uses: cypress-io/github-action@v6
+      uses: cypress-io/github-action@v3
       with:
         wait-on: 'http://localhost:3000'
+        wait-on-timeout: 120
         record: true
-        parallel: true
-        config: baseUrl=http://localhost:3000
       env:
         CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
