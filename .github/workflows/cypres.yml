@@ -2,31 +2,32 @@ name: Daily Cypress Tests
 
 on:
   schedule:
-    - cron: '30 08 * * *'
+    - cron: '50 08 * * *' # Runs every day at 05:15 AM UTC
+
 jobs:
   run-cypress-tests:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
+
+    env:
+      TZ: Asia/Manila
+      CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }} # Ensure this is set in your GitHub repo secrets
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '20'  
+        node-version: '20'
 
     - name: Install Dependencies
-      run: npm ci
+      run: npm install
 
-    - name: Run Cypress Tests
+    - name: Cypress run
       uses: cypress-io/github-action@v3
       with:
-        wait-on: 'http://localhost:3000'
-        wait-on-timeout: 120
-        record: true
+        record: true # Enables recording test results on Cypress Cloud
+        # Add additional configurations if needed
       env:
         CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
