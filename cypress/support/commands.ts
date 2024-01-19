@@ -32,6 +32,7 @@ declare namespace Cypress {
     ): Chainable<Element>
     assertElementNotContainText(selector: string, text: string): Chainable
     assertScrollIntoViewElementsAreVisible(selectors: string[]): Chainable
+    testDataCleanUp(): Chainable
   }
 }
 Cypress.Commands.add('genRandomString', (length: number) => {
@@ -106,7 +107,7 @@ Cypress.Commands.add(
 Cypress.Commands.add(
   'assertElementVisibleAndClick',
   (selector: string, aliasName: string) => {
-    cy.get(selector).should('exist').should('be.visible').as(aliasName).click()
+    cy.get(selector).should('be.visible').as(aliasName).click()
   }
 )
 
@@ -114,7 +115,6 @@ Cypress.Commands.add(
   'assertElementVisibleAndType',
   (selector: string, aliasName: string, userInput: string) => {
     cy.get(selector)
-      .should('exist')
       .should('be.visible')
       .as(aliasName)
       .type(userInput)
@@ -178,6 +178,19 @@ Cypress.Commands.add(
   (selectors: string[]) => {
     selectors.forEach(selector => {
       cy.get(selector).scrollIntoView().should('be.visible')
+    })
+  }
+)
+Cypress.Commands.add(
+  'testDataCleanUp', () => {
+    cy.request({
+      method: 'DELETE',
+      url: `https://${Cypress.env('appEnv')}-api1.workyard.com/delete_test_orgs`,
+      headers: {
+        'x-workyard-system-tests': true
+      }
+    }).then(response => {
+      expect(response.status).to.equal(200)
     })
   }
 )
