@@ -1,5 +1,5 @@
 module.exports = {
-  projectId: 'nir5f9',
+  projectId: 't6ra1r',
   record: true,
   chromeWebSecurity: false,
   e2e: {
