@@ -3,6 +3,7 @@
     "scripts": {
         "cypress:open": "cypress open",
         "cypress:run": "cypress run",
+        "cypress:start": "cypress start",
         "lint": "eslint .",
         "prettier": "prettier --check .",
         "prettier:fix": "prettier --write .",
