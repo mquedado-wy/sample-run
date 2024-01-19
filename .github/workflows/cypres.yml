@@ -10,7 +10,7 @@ jobs:
 
     env:
       TZ: Asia/Manila
-      CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }} # Ensure this is set in your GitHub repo secrets
+      CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
     steps:
     - name: Checkout Code
@@ -27,7 +27,6 @@ jobs:
     - name: Cypress run
       uses: cypress-io/github-action@v3
       with:
-        record: true # Enables recording test results on Cypress Cloud
-        # Add additional configurations if needed
+        record: true
       env:
         CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
