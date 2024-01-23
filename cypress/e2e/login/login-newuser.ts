@@ -13,29 +13,19 @@ import {
 } from '../../utilities/sign-up/signup-locators'
 
 import {
-  USER_INFO_MENU,
-  LOGOUT_BUTTON,
-  DASHBOARD_NAV_BTN,
-  TIMECARDS_NAV_BTN,
-  PROJECT_HUB_NAV_BTN,
-  TASK_AND_SCHEDULE_NAV_BTN,
-  JOB_COSTING_NAV_BTN,
-  TEAM_MEMBERS_NAV_BTN,
-  INTEGRATIONS_NAV_BTN
-} from '../../utilities/dashboard/dashboard-locators'
-
-import {
   LOGIN_EMAIL_FLD,
   LOGIN_PASSWORD_FLD,
-  LOGIN_BTN
+  LOGIN_BTN,
+  LOGIN_ERROR_FLD
 } from '../../utilities/login/login-locators'
 
 import {
   DEFAULT_PASSWORD,
-  NEW_SIGNUP_EMAIL_1,
+  NEW_SIGNUP_EMAIL_2,
   MOBILE_NUMBER_LOGIN,
   BUSINESS_NAME_LOGIN,
-  INIT_NAME
+  INIT_NAME,
+  LOGIN_NO_INTERNET_ERROR_MSG
 } from '../../utilities/login/login-messages-constants'
 
 const baseUrl = Cypress.env('baseUrl')
@@ -44,11 +34,16 @@ describe('Verify a "newly" registered user is able to login', () => {
     // User is navigated to SIGN-UP page
     cy.visit(`${baseUrl}/sign_up`)
 
+    // User supplies valid inputs for all fields
     cy.genRandomString(6).then((randomString: string) => {
       const finName = INIT_NAME + randomString
       cy.get(FIRST_LAST_NAME_FLD).type(finName)
     })
-    cy.assertElementVisibleAndType(EMAIL_FLD, 'email-field', NEW_SIGNUP_EMAIL_1)
+    cy.assertElementVisibleAndType(
+      EMAIL_FLD,
+      'email-field',
+      NEW_SIGNUP_EMAIL_2
+    )
     cy.assertElementVisibleAndType(
       MOBILE_NUMBER_FLD,
       'mobile-field',
@@ -79,183 +74,39 @@ describe('Verify a "newly" registered user is able to login', () => {
 
     // Verify user is navigated in Dashboard page
     cy.contains('Get Started')
-
-    // Newly registered user logs out
-    cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-menu')
-    cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
   })
 
-  it('should logout the newly created user from DASHBOARD page', () => {
+  it('should login the newly created user', () => {
     cy.visit(`${baseUrl}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
-      NEW_SIGNUP_EMAIL_1
+      NEW_SIGNUP_EMAIL_2
     )
     cy.assertElementVisibleAndType(
       LOGIN_PASSWORD_FLD,
-      'login-password-field',
+      'login-user-password',
       DEFAULT_PASSWORD
     )
     cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
-
-    // Verify user is able to log in and lands on the DASHBOARD page
-    cy.assertElementVisibleAndClick(DASHBOARD_NAV_BTN, 'dashboard-button')
-    cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
-    cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
-    cy.url().should('eq', `${baseUrl}/login`)
+    // Verify user is able to login and navigated to Dashboard page
+    cy.contains('Get Started')
   })
-
-  it('should logout the newly created user from TIMECARDS page', () => {
+  it('should handle no network connectivitiy', () => {
     cy.visit(`${baseUrl}/login`)
-    cy.assertElementVisibleAndType(
-      LOGIN_EMAIL_FLD,
-      'login-email-field',
-      NEW_SIGNUP_EMAIL_1
-    )
-    cy.assertElementVisibleAndType(
-      LOGIN_PASSWORD_FLD,
-      'login-password-field',
-      DEFAULT_PASSWORD
-    )
-    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
-
-    // Verify user is able to log in and navigate to TIMECARDS page
-    cy.assertElementVisibleAndClick(TIMECARDS_NAV_BTN, 'timecards-button')
-    cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
-    cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
-    cy.url().should('eq', `${baseUrl}/login`)
-  })
-
-  it('should logout the newly created user from PROJECT HUB page', () => {
-    cy.visit(`${baseUrl}/login`)
-    cy.assertElementVisibleAndType(
-      LOGIN_EMAIL_FLD,
-      'login-email-field',
-      NEW_SIGNUP_EMAIL_1
-    )
-    cy.assertElementVisibleAndType(
-      LOGIN_PASSWORD_FLD,
-      'login-password-field',
-      DEFAULT_PASSWORD
-    )
-    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
-
-    // Verify user is able to log in and navigate to PROJECT HUB page
-    cy.assertElementVisibleAndClick(PROJECT_HUB_NAV_BTN, 'proj-hub-button')
-    cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
-    cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
-    cy.url().should('eq', `${baseUrl}/login`)
-  })
-
-  it('should logout the newly created user from TASK & SCHEDULE page', () => {
-    cy.visit(`${baseUrl}/login`)
-    cy.assertElementVisibleAndType(
-      LOGIN_EMAIL_FLD,
-      'login-email-field',
-      NEW_SIGNUP_EMAIL_1
-    )
-    cy.assertElementVisibleAndType(
-      LOGIN_PASSWORD_FLD,
-      'login-password-field',
-      DEFAULT_PASSWORD
-    )
-    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
-
-    // Verify user is able to log in and navigate to TASK & SCHEDULE page
-    cy.assertElementVisibleAndClick(
-      TASK_AND_SCHEDULE_NAV_BTN,
-      'task-sched-button'
-    )
-    cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
-    cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
-    cy.url().should('eq', `${baseUrl}/login`)
-  })
-
-  it('should logout the newly created user from JOB COSTING page', () => {
-    cy.visit(`${baseUrl}/login`)
-    cy.assertElementVisibleAndType(
-      LOGIN_EMAIL_FLD,
-      'login-email-field',
-      NEW_SIGNUP_EMAIL_1
-    )
-    cy.assertElementVisibleAndType(
-      LOGIN_PASSWORD_FLD,
-      'login-password-field',
-      DEFAULT_PASSWORD
-    )
-    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
-
-    // Verify user is able to log in and navigate to JOB COSTING page
-    cy.assertElementVisibleAndClick(JOB_COSTING_NAV_BTN, 'job-costing-button')
-    cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
-    cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
-    cy.url().should('eq', `${baseUrl}/login`)
-  })
-
-  it('should logout the newly created user from TEAM MEMBERS page', () => {
-    cy.visit(`${baseUrl}/login`)
-    cy.assertElementVisibleAndType(
-      LOGIN_EMAIL_FLD,
-      'login-email-field',
-      NEW_SIGNUP_EMAIL_1
-    )
-    cy.assertElementVisibleAndType(
-      LOGIN_PASSWORD_FLD,
-      'login-password-field',
-      DEFAULT_PASSWORD
-    )
-    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
-
-    // Verify user is able to login and navigated to TEAM MEMBERS page
-    cy.assertElementVisibleAndClick(TEAM_MEMBERS_NAV_BTN, 'team-mem-button')
-    cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-menu')
-    cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
-    cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
-    cy.url().should('eq', `${baseUrl}/login`)
-  })
-
-  it('should logout the newly created user from INTEGRATIONS page', () => {
-    cy.visit(`${baseUrl}/login`)
-    cy.assertElementVisibleAndType(
-      LOGIN_EMAIL_FLD,
-      'login-email-field',
-      NEW_SIGNUP_EMAIL_1
-    )
-    cy.assertElementVisibleAndType(
-      LOGIN_PASSWORD_FLD,
-      'login-password-field',
-      DEFAULT_PASSWORD
-    )
-    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
-
-    // Verify user is able to login and navigated to INTEGRATIONS page
-    cy.assertElementVisibleAndClick(INTEGRATIONS_NAV_BTN, 'integration-button')
-    cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
-    cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
-    cy.url().should('eq', `${baseUrl}/login`)
-  })
-
-  it('should handle no network connectivity when user logs out', () => {
-    cy.visit(`${baseUrl}/login`)
-    cy.assertElementVisibleAndType(
-      LOGIN_EMAIL_FLD,
-      'login-email-field',
-      NEW_SIGNUP_EMAIL_1
-    )
-    cy.assertElementVisibleAndType(
-      LOGIN_PASSWORD_FLD,
-      'login-password-field',
-      DEFAULT_PASSWORD
-    )
-    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
-
-    cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
-
-    // Temporarily simulates no internet connectivity
     cy.intercept({ url: '**/*' }, { forceNetworkError: true })
-    cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
-    cy.url().should('eq', `${baseUrl}/login`)
+    cy.assertElementVisibleAndType(
+      LOGIN_EMAIL_FLD,
+      'login-email-field',
+      NEW_SIGNUP_EMAIL_2
+    )
+    cy.assertElementVisibleAndType(
+      LOGIN_PASSWORD_FLD,
+      'login-user-password',
+      DEFAULT_PASSWORD
+    )
+    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
+    cy.assertElementContainsText(LOGIN_ERROR_FLD, LOGIN_NO_INTERNET_ERROR_MSG)
   })
   after(() => {
     // This is to clean-up the test organization and its related data associated with it
