@@ -13,12 +13,16 @@ import {
 } from '../../utilities/sign-up/signup-locators'
 
 import {
-  NEW_SIGNUP_EMAIL,
-  BUSINESS_NAME_SIGNUP,
-  MOBILE_NUMBER_SIGNUP,
-  DEFAULT_PASSWORD,
-  INIT_NAME
-} from '../../utilities/sign-up/signup-messages-constants'
+  USER_INFO_MENU,
+  LOGOUT_BUTTON,
+  DASHBOARD_NAV_BTN,
+  TIMECARDS_NAV_BTN,
+  PROJECT_HUB_NAV_BTN,
+  TASK_AND_SCHEDULE_NAV_BTN,
+  JOB_COSTING_NAV_BTN,
+  TEAM_MEMBERS_NAV_BTN,
+  INTEGRATIONS_NAV_BTN
+} from '../../utilities/dashboard/dashboard-locators'
 
 import {
   LOGIN_EMAIL_FLD,
@@ -27,73 +31,33 @@ import {
 } from '../../utilities/login/login-locators'
 
 import {
-  ACTIVATE_PLAN_BTN,
-  PAYMENT_CARD_NUMBER_FLD,
-  PAYMENT_CVC_FLD,
-  PAYMENT_EXP_DATE_FLD,
-  PAYMENT_POSTAL_FLD,
-  SUBSCRIBE_BTN,
-  SUBSCRIPTION_MODAL_CONTAINER,
-  UNLOCK_FLD,
-  UNLOCK_ICON,
-  START_30_DAY_WFM_TRIAL_BTN,
-  AGREE_TERMS_OF_SERVICE
-} from '../../utilities/subscription/subscription-locators'
-
-import {
-  VISA_CARD,
-  DYNAMIC_MONTH,
-  DYNAMIC_YEAR,
-  DYNAMIC_CVC,
-  SEATLE_ZIPCODE
-} from '../../utilities/subscription/subscription-messages-constants'
-
-import {
-  PLANS_AND_BILLING_BTN,
-  SETTINGS_BTN
-} from 'cypress/utilities/dashboard/dashboard-locators'
-
-import {
-  SUBSCRIPTION_TYPE_PLAN_LBL,
-  SUBSCRIPTION_TYPE_PLAN_HDR,
-  SUBSCRIPTION_PERIOD_PLAN_HDR,
-  SUBSCRIPTION_PERIOD_PLAN_LBL
-} from 'cypress/utilities/plans-and-billing/plans_and_billing-locators'
-
-import {
-  TIMECARDS_NAV_BTN,
-  PROJECT_HUB_NAV_BTN,
-  TASK_AND_SCHEDULE_NAV_BTN,
-  JOB_COSTING_NAV_BTN,
-  TEAM_MEMBERS_NAV_BTN
-} from '../../utilities/dashboard/dashboard-locators'
+  DEFAULT_PASSWORD,
+  NEW_SIGNUP_EMAIL_1,
+  MOBILE_NUMBER_LOGIN,
+  BUSINESS_NAME_LOGIN,
+  INIT_NAME
+} from '../../utilities/login/login-messages-constants'
 
 const baseUrl = Cypress.env('baseUrl')
-const paymentMethodEndPoint = Cypress.env('paymentMethodEndPoint')
-const billingAndPlansEndPoint = new RegExp(
-  Cypress.env('billingAndPlansEndPoint')
-)
-describe('Create a new User to test Subscription Page', () => {
+describe('Verify a "newly" registered user is able to login', () => {
   it('should allow a user to sign up successfully', () => {
     // User is navigated to SIGN-UP page
     cy.visit(`${baseUrl}/sign_up`)
 
-    // User supplies valid inputs for all fields
     cy.genRandomString(6).then((randomString: string) => {
       const finName = INIT_NAME + randomString
       cy.get(FIRST_LAST_NAME_FLD).type(finName)
     })
-
-    cy.assertElementVisibleAndType(EMAIL_FLD, 'user-email', NEW_SIGNUP_EMAIL)
+    cy.assertElementVisibleAndType(EMAIL_FLD, 'email-field', NEW_SIGNUP_EMAIL_1)
     cy.assertElementVisibleAndType(
       MOBILE_NUMBER_FLD,
-      'user-mobile',
-      MOBILE_NUMBER_SIGNUP
+      'mobile-field',
+      MOBILE_NUMBER_LOGIN
     )
     cy.assertElementVisibleAndType(
       BUSINESS_NAME_FLD,
-      'user-business-name',
-      BUSINESS_NAME_SIGNUP
+      'business-field',
+      BUSINESS_NAME_LOGIN
     )
     cy.assertElementVisibleAndClick(DOWN_EMP_DROPDOWN, 'down-emp-dropwdown')
     cy.assertElementContainsTextAndClick(EMPLOYEE_DROPDOWN, '6-10')
@@ -115,15 +79,18 @@ describe('Create a new User to test Subscription Page', () => {
 
     // Verify user is navigated in Dashboard page
     cy.contains('Get Started')
+
+    // Newly registered user logs out
+    cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-menu')
+    cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
   })
 
-  it('should verify that user is able to subscribe to "WORKFORCE MANAGEMENT - MONTHLY"', () => {
-    // Logins the newly created user
+  it('should logout the newly created user from DASHBOARD page', () => {
     cy.visit(`${baseUrl}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
-      NEW_SIGNUP_EMAIL
+      NEW_SIGNUP_EMAIL_1
     )
     cy.assertElementVisibleAndType(
       LOGIN_PASSWORD_FLD,
@@ -132,48 +99,19 @@ describe('Create a new User to test Subscription Page', () => {
     )
     cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
 
-    // Verify user is able to login and navigated to Dashboard page
-    cy.contains('Get Started')
-
-    cy.assertElementVisibleAndClick(ACTIVATE_PLAN_BTN, 'activate_plan_btn')
-    cy.assertElementsAreVisible([SUBSCRIPTION_MODAL_CONTAINER])
-
-    // Verify user is able to enter payment card details
-    cy.getStripeElement(PAYMENT_CARD_NUMBER_FLD).type(VISA_CARD)
-    cy.getStripeElement(PAYMENT_EXP_DATE_FLD).type(
-      `${DYNAMIC_MONTH}/${DYNAMIC_YEAR}`
-    )
-    cy.getStripeElement(PAYMENT_CVC_FLD).type(DYNAMIC_CVC)
-    cy.getStripeElement(PAYMENT_POSTAL_FLD).type(SEATLE_ZIPCODE)
-
-    // Intercept 'POST' Request then wait for the request to have Success 200 Code
-    cy.assertElementVisibleAndClick(AGREE_TERMS_OF_SERVICE, 'accept-terms')
-    cy.intercept('POST', paymentMethodEndPoint).as('subscribePlan')
-    cy.intercept('POST', billingAndPlansEndPoint).as('billingEndPoint')
-
-    cy.assertElementVisibleAndClick(SUBSCRIBE_BTN, 'subscribe-btn')
-    cy.wait(['@subscribePlan', '@billingEndPoint']).spread(
-      (subscribePlan, billingEndPoint) => {
-        if (subscribePlan.response != null) {
-          expect(subscribePlan.response.statusCode).to.equal(200)
-        }
-
-        if (billingEndPoint.response != null) {
-          expect(billingEndPoint.response.statusCode).to.equal(200)
-        }
-      }
-    )
-    // Verify user is navigated in 'Setup: Get Started' page
-    cy.contains('Get Started')
+    // Verify user is able to log in and lands on the DASHBOARD page
+    cy.assertElementVisibleAndClick(DASHBOARD_NAV_BTN, 'dashboard-button')
+    cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
+    cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
+    cy.url().should('eq', `${baseUrl}/login`)
   })
 
-  it('should verify that user is successfully subscribe to "WORKFORCE MANAGEMENT - MONTHLY"', () => {
-    // Logins the newly created user
+  it('should logout the newly created user from TIMECARDS page', () => {
     cy.visit(`${baseUrl}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
-      NEW_SIGNUP_EMAIL
+      NEW_SIGNUP_EMAIL_1
     )
     cy.assertElementVisibleAndType(
       LOGIN_PASSWORD_FLD,
@@ -182,30 +120,64 @@ describe('Create a new User to test Subscription Page', () => {
     )
     cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
 
-    // Verify user is navigated to Plans and Billing Page"
-    cy.assertElementVisibleAndClick(SETTINGS_BTN, 'settings-btn')
+    // Verify user is able to log in and navigate to TIMECARDS page
+    cy.assertElementVisibleAndClick(TIMECARDS_NAV_BTN, 'timecards-button')
+    cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
+    cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
+    cy.url().should('eq', `${baseUrl}/login`)
+  })
+
+  it('should logout the newly created user from PROJECT HUB page', () => {
+    cy.visit(`${baseUrl}/login`)
+    cy.assertElementVisibleAndType(
+      LOGIN_EMAIL_FLD,
+      'login-email-field',
+      NEW_SIGNUP_EMAIL_1
+    )
+    cy.assertElementVisibleAndType(
+      LOGIN_PASSWORD_FLD,
+      'login-password-field',
+      DEFAULT_PASSWORD
+    )
+    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
+
+    // Verify user is able to log in and navigate to PROJECT HUB page
+    cy.assertElementVisibleAndClick(PROJECT_HUB_NAV_BTN, 'proj-hub-button')
+    cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
+    cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
+    cy.url().should('eq', `${baseUrl}/login`)
+  })
+
+  it('should logout the newly created user from TASK & SCHEDULE page', () => {
+    cy.visit(`${baseUrl}/login`)
+    cy.assertElementVisibleAndType(
+      LOGIN_EMAIL_FLD,
+      'login-email-field',
+      NEW_SIGNUP_EMAIL_1
+    )
+    cy.assertElementVisibleAndType(
+      LOGIN_PASSWORD_FLD,
+      'login-password-field',
+      DEFAULT_PASSWORD
+    )
+    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
+
+    // Verify user is able to log in and navigate to TASK & SCHEDULE page
     cy.assertElementVisibleAndClick(
-      PLANS_AND_BILLING_BTN,
-      'plans-and-billing-btn'
+      TASK_AND_SCHEDULE_NAV_BTN,
+      'task-sched-button'
     )
-
-    // Verify that the user is subscribe to "WORKFORCE MANAGEMENT MONTHLY"
-    cy.assertElementContainsText(SUBSCRIPTION_TYPE_PLAN_HDR, 'Plan:')
-    cy.assertElementContainsText(
-      SUBSCRIPTION_TYPE_PLAN_LBL,
-      'Workforce Management'
-    )
-    cy.assertElementContainsText(SUBSCRIPTION_PERIOD_PLAN_HDR, 'Subscription:')
-    cy.assertElementContainsText(SUBSCRIPTION_PERIOD_PLAN_LBL, 'Monthly')
+    cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
+    cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
+    cy.url().should('eq', `${baseUrl}/login`)
   })
 
-  it('should verify that user has only "TIME TRACKING and WORKFORCE MANAGEMENT" features only', () => {
-    // Logins the newly created user
+  it('should logout the newly created user from JOB COSTING page', () => {
     cy.visit(`${baseUrl}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
-      NEW_SIGNUP_EMAIL
+      NEW_SIGNUP_EMAIL_1
     )
     cy.assertElementVisibleAndType(
       LOGIN_PASSWORD_FLD,
@@ -214,45 +186,76 @@ describe('Create a new User to test Subscription Page', () => {
     )
     cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
 
-    // Verify user subscribed in "WORKFORCE MANAGEMENT" plan has a feature of "Timecards"
-    cy.assertElementVisibleAndClick(TIMECARDS_NAV_BTN, 'timecards_btn')
-    cy.assertElementsDoNotExist([
-      UNLOCK_ICON,
-      UNLOCK_FLD,
-      START_30_DAY_WFM_TRIAL_BTN
-    ])
+    // Verify user is able to log in and navigate to JOB COSTING page
+    cy.assertElementVisibleAndClick(JOB_COSTING_NAV_BTN, 'job-costing-button')
+    cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
+    cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
+    cy.url().should('eq', `${baseUrl}/login`)
+  })
 
-    // Verify user subscribed in "WORKFORCE MANAGEMENT" has a feature of "Projects"
-    cy.assertElementVisibleAndClick(PROJECT_HUB_NAV_BTN, 'project-hub_btn')
-    cy.assertElementsDoNotExist([
-      UNLOCK_ICON,
-      UNLOCK_FLD,
-      START_30_DAY_WFM_TRIAL_BTN
-    ])
+  it('should logout the newly created user from TEAM MEMBERS page', () => {
+    cy.visit(`${baseUrl}/login`)
+    cy.assertElementVisibleAndType(
+      LOGIN_EMAIL_FLD,
+      'login-email-field',
+      NEW_SIGNUP_EMAIL_1
+    )
+    cy.assertElementVisibleAndType(
+      LOGIN_PASSWORD_FLD,
+      'login-password-field',
+      DEFAULT_PASSWORD
+    )
+    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
 
-    // Verify user subscribed in "WORKFORCE MANAGEMENT" has a feature of "Scheduling & Tasks"
-    cy.assertElementVisibleAndClick(TASK_AND_SCHEDULE_NAV_BTN, 'task-sked_btn')
-    cy.assertElementsDoNotExist([
-      UNLOCK_ICON,
-      UNLOCK_FLD,
-      START_30_DAY_WFM_TRIAL_BTN
-    ])
+    // Verify user is able to login and navigated to TEAM MEMBERS page
+    cy.assertElementVisibleAndClick(TEAM_MEMBERS_NAV_BTN, 'team-mem-button')
+    cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-menu')
+    cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
+    cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
+    cy.url().should('eq', `${baseUrl}/login`)
+  })
 
-    // Verify user subscribed in "WORKFORCE MANAGEMENT" has a feature of "Job Costing"
-    cy.assertElementVisibleAndClick(JOB_COSTING_NAV_BTN, 'job-costing_btn')
-    cy.assertElementsDoNotExist([
-      UNLOCK_ICON,
-      UNLOCK_FLD,
-      START_30_DAY_WFM_TRIAL_BTN
-    ])
+  it('should logout the newly created user from INTEGRATIONS page', () => {
+    cy.visit(`${baseUrl}/login`)
+    cy.assertElementVisibleAndType(
+      LOGIN_EMAIL_FLD,
+      'login-email-field',
+      NEW_SIGNUP_EMAIL_1
+    )
+    cy.assertElementVisibleAndType(
+      LOGIN_PASSWORD_FLD,
+      'login-password-field',
+      DEFAULT_PASSWORD
+    )
+    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
 
-    // // Verify user subscribed in "WORKFORCE MANAGEMENT" has a feature of "Projects"
-    cy.assertElementVisibleAndClick(TEAM_MEMBERS_NAV_BTN, 'team-mem_btn')
-    cy.assertElementsDoNotExist([
-      UNLOCK_ICON,
-      UNLOCK_FLD,
-      START_30_DAY_WFM_TRIAL_BTN
-    ])
+    // Verify user is able to login and navigated to INTEGRATIONS page
+    cy.assertElementVisibleAndClick(INTEGRATIONS_NAV_BTN, 'integration-button')
+    cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
+    cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
+    cy.url().should('eq', `${baseUrl}/login`)
+  })
+
+  it('should handle no network connectivity when user logs out', () => {
+    cy.visit(`${baseUrl}/login`)
+    cy.assertElementVisibleAndType(
+      LOGIN_EMAIL_FLD,
+      'login-email-field',
+      NEW_SIGNUP_EMAIL_1
+    )
+    cy.assertElementVisibleAndType(
+      LOGIN_PASSWORD_FLD,
+      'login-password-field',
+      DEFAULT_PASSWORD
+    )
+    cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-button')
+
+    cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
+
+    // Temporarily simulates no internet connectivity
+    cy.intercept({ url: '**/*' }, { forceNetworkError: true })
+    cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
+    cy.url().should('eq', `${baseUrl}/login`)
   })
   after(() => {
     // This is to clean-up the test organization and its related data associated with it
