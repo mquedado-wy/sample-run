@@ -119,7 +119,8 @@ describe('Verify Users use "Forgot Password" feature', () => {
     )
     cy.assertElementsDoNotExist([FORGOT_PASSWD_INLINE_ERROR_FLD])
   })
-
-  // TODO: Add test for the case where an existing user tries to use forgot password feature
-  //       We should check that the email arrives in the existing.user.ENV@workyard.testinator.com inbox
+  // This is to clean-up the test organization and its related data associated with it
+  after(() => {
+    cy.mailinatorEmailCleanUp()
+  })
 })
