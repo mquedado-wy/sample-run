@@ -1,16 +1,16 @@
 import {
-  FORGOT_PASSWD_EMAIL_CONTENT_HEADER,
-  FORGOT_PASSWD_EMAIL_CONTENT_MESSAGE,
-  FORGOT_PASSWD_EMAIL_CONTENT_WARNING,
+  FP_EMAIL_EXISTINGUSER_CONTENT_HEADER,
+  FP_EMAIL_EXISTINGUSER_CONTENT_MESSAGE,
+  FP_EMAIL_EXISTINGUSER_CONTENT_WARNING,
   EXISTING_USER_EMAIL
 } from '../../utilities/forgot-password/forgot-passwd-messages-constants'
 
 const forgotPWAuthToken = Cypress.env('forgotPWAuthToken')
 const mailinatorBearerToken = Cypress.env('mailinatorBearerToken')
 const expectedContentResetPasswordEmail = [
-  FORGOT_PASSWD_EMAIL_CONTENT_HEADER,
-  FORGOT_PASSWD_EMAIL_CONTENT_MESSAGE,
-  FORGOT_PASSWD_EMAIL_CONTENT_WARNING
+  FP_EMAIL_EXISTINGUSER_CONTENT_HEADER,
+  FP_EMAIL_EXISTINGUSER_CONTENT_MESSAGE,
+  FP_EMAIL_EXISTINGUSER_CONTENT_WARNING
 ]
 
 describe('User Requests for Password Reset - Forgot Password', () => {
