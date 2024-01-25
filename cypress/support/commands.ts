@@ -33,6 +33,8 @@ declare namespace Cypress {
     assertElementNotContainText(selector: string, text: string): Chainable
     assertScrollIntoViewElementsAreVisible(selectors: string[]): Chainable
     testDataCleanUp(): Chainable
+    mailinatorEmailCleanUp(): Chainable
+    mailinatorDeleteLatestEmail(): Chainable
   }
 }
 Cypress.Commands.add('genRandomString', (length: number) => {
@@ -188,6 +190,20 @@ Cypress.Commands.add(
       url: `https://${Cypress.env('appEnv')}-api1.workyard.com/delete_test_orgs`,
       headers: {
         'x-workyard-system-tests': true
+      }
+    }).then(response => {
+      expect(response.status).to.equal(200)
+    })
+  }
+)
+
+Cypress.Commands.add(
+  'mailinatorEmailCleanUp', () => {
+    cy.request({
+      method: 'DELETE',
+      url: 'https://mailinator.com/api/v2/domains/private/inboxes',
+      headers: {
+        Authorization: `${Cypress.env('mailinatorBearerToken')}`
       }
     }).then(response => {
       expect(response.status).to.equal(200)
