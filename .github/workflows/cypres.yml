@@ -2,7 +2,7 @@ name: Daily Cypress Tests
 
 on:
   schedule:
-    - cron: '56 16 * * *'
+    - cron: '56 03 * * *'
 
 jobs:
   run-cypress-tests:
