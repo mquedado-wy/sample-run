@@ -18,6 +18,7 @@ describe('Verify the contents of the forgot password email', () => {
   it('should make a successful GET request', () => {
     // This timeout is needed for a delay for waiting for the mailinator inbox to be refreshed
     // And make sure that the mailinator inbox have the
+    cy.wait(10000)
     cy.request({
       method: 'GET',
       url: 'https://mailinator.com/api/v2/domains/private/inboxes?limit=1&sort=descending',
