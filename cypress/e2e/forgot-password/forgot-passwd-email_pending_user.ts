@@ -20,7 +20,7 @@ describe('Verify the contents of the forgot password email', () => {
     cy.request({
       method: 'GET',
       url: 'https://mailinator.com/api/v2/domains/private/inboxes?limit=1&sort=descending',
-      timeout: 10000,
+      timeout: 20000,
       headers: {
         Authorization: mailinatorBearerToken
       }
