@@ -5,7 +5,6 @@ import {
   PENDING_USER_EMAIL
 } from '../../utilities/forgot-password/forgot-passwd-messages-constants'
 
-const forgotPWAuthToken = Cypress.env('forgotPWAuthToken')
 const mailinatorBearerToken = Cypress.env('mailinatorBearerToken')
 const expectedContentPendingInviteEmail = [
   FP_EMAIL_PENDINGUSER_CONTENT_HEADER,
@@ -13,31 +12,15 @@ const expectedContentPendingInviteEmail = [
   FP_EMAIL_PENDINGUSER_CONTENT_INFO
 ]
 
-describe('User Requests for Password Reset - Forgot Password', () => {
-  it('should successfully request for password reset', () => {
-    cy.request({
-      method: 'POST',
-      url: 'https://staging-api1.workyard.com/resend_invite_by_email',
-      headers: {
-        Authorization: forgotPWAuthToken,
-        'Workyard-Agent': 'website|Windows|NA|14.5.1|1920|1080|1|NA|Asia/Manila|v:1704844800',
-        'x-workyard-system-tests': true
-      },
-      body: {
-        email: PENDING_USER_EMAIL
-      }
-    }).then(response => {
-      // Verify that the response status is 200 OK
-      expect(response.status).to.equal(200)
-    })
-  })
-})
-
 describe('Verify the contents of the forgot password email', () => {
+  before(() => {
+    cy.resendEmailInviteRequest()
+  })
   it('should make a successful GET request', () => {
     cy.request({
       method: 'GET',
       url: 'https://mailinator.com/api/v2/domains/private/inboxes?limit=1&sort=descending',
+      timeout: 10000,
       headers: {
         Authorization: mailinatorBearerToken
       }
@@ -113,9 +96,5 @@ describe('Verify the contents of the forgot password email', () => {
         expect(response.status).to.equal(200)
       })
     })
-  })
-  // This is to clean-up the test organization and its related data associated with it
-  after(() => {
-    cy.mailinatorEmailCleanUp()
   })
 })
