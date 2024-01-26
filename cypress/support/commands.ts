@@ -34,7 +34,8 @@ declare namespace Cypress {
     assertScrollIntoViewElementsAreVisible(selectors: string[]): Chainable
     testDataCleanUp(): Chainable
     mailinatorEmailCleanUp(): Chainable
-    mailinatorDeleteLatestEmail(): Chainable
+    resetPasswordRequest(): Chainable
+    resendEmailInviteRequest(): Chainable
   }
 }
 Cypress.Commands.add('genRandomString', (length: number) => {
@@ -206,6 +207,46 @@ Cypress.Commands.add(
         Authorization: `${Cypress.env('mailinatorBearerToken')}`
       }
     }).then(response => {
+      expect(response.status).to.equal(200)
+    })
+  }
+)
+
+Cypress.Commands.add(
+  'resetPasswordRequest', () => {
+    cy.request({
+      method: 'POST',
+      url: 'https://staging-api1.workyard.com/request_password_reset',
+      headers: {
+        Authorization: `${Cypress.env('forgotPWAuthToken')}`,
+        'Workyard-Agent': 'website|Windows|NA|14.5.1|1920|1080|1|NA|Asia/Manila|v:1704844800',
+        'x-workyard-system-tests': true
+      },
+      body: {
+        email: 'existing.user.staging@workyard.testinator.com'
+      }
+    }).then(response => {
+      // Verify that the response status is 200 OK
+      expect(response.status).to.equal(200)
+    })
+  }
+)
+
+Cypress.Commands.add(
+  'resendEmailInviteRequest', () => {
+    cy.request({
+      method: 'POST',
+      url: 'https://staging-api1.workyard.com/resend_invite_by_email',
+      headers: {
+        Authorization: `${Cypress.env('forgotPWAuthToken')}`,
+        'Workyard-Agent': 'website|Windows|NA|14.5.1|1920|1080|1|NA|Asia/Manila|v:1704844800',
+        'x-workyard-system-tests': true
+      },
+      body: {
+        email: 'pending.user.staging@workyard.testinator.com'
+      }
+    }).then(response => {
+      // Verify that the response status is 200 OK
       expect(response.status).to.equal(200)
     })
   }
