@@ -5,51 +5,37 @@ import {
   EXISTING_USER_EMAIL
 } from '../../utilities/forgot-password/forgot-passwd-messages-constants'
 
-const forgotPWAuthToken = Cypress.env('forgotPWAuthToken')
 const mailinatorBearerToken = Cypress.env('mailinatorBearerToken')
 const expectedContentResetPasswordEmail = [
   FP_EMAIL_EXISTINGUSER_CONTENT_HEADER,
   FP_EMAIL_EXISTINGUSER_CONTENT_MESSAGE,
   FP_EMAIL_EXISTINGUSER_CONTENT_WARNING
 ]
-
-describe('User Requests for Password Reset - Forgot Password', () => {
-  it('should successfully request for password reset', () => {
-    cy.request({
-      method: 'POST',
-      url: 'https://staging-api1.workyard.com/request_password_reset',
-      headers: {
-        Authorization: forgotPWAuthToken,
-        'Workyard-Agent': 'website|Windows|NA|14.5.1|1920|1080|1|NA|Asia/Manila|v:1704844800',
-        'x-workyard-system-tests': true
-      },
-      body: {
-        email: EXISTING_USER_EMAIL
-      }
-    }).then(response => {
-      // Verify that the response status is 200 OK
-      expect(response.status).to.equal(200)
-    })
-  })
-})
-
 describe('Verify the contents of the forgot password email', () => {
+  before(() => {
+    cy.resetPasswordRequest()
+  })
   it('should make a successful GET request', () => {
+    // This wait time is needed for a delay for waiting for the mailinator inbox to be refreshed
+    // And make sure that the mailinator inbox have the
+    // cy.wait(5000)
     cy.request({
       method: 'GET',
       url: 'https://mailinator.com/api/v2/domains/private/inboxes?limit=1&sort=descending',
+      timeout: 10000,
       headers: {
         Authorization: mailinatorBearerToken
       }
-    }).then((response) => {
+    }).then((inboxResponse) => {
       // Verify that the response status is 200 OK
-      expect(response.status).to.equal(200)
-      expect(response.body.msgs[0]).to.have.property('id')
-      const msgId = response.body.msgs[0].id
-      const msgTo = response.body.msgs[0].to
-      const msgSubject = response.body.msgs[0].subject
+      expect(inboxResponse.status).to.equal(200)
+      expect(inboxResponse.body.msgs[0]).to.have.property('id')
+      const msgId = inboxResponse.body.msgs[0].id
+      const msgTo = inboxResponse.body.msgs[0].to
+      const msgSubject = inboxResponse.body.msgs[0].subject
       cy.wrap(msgId).as('msgId')
       cy.wrap(msgTo).as('msgTo')
+
       // Initial Check if the email was sent to the correct user
       expect(EXISTING_USER_EMAIL).to.have.contain(msgTo)
       cy.wrap(msgSubject).as('msgSubject')
@@ -113,9 +99,5 @@ describe('Verify the contents of the forgot password email', () => {
         expect(response.status).to.equal(200)
       })
     })
-  })
-  // This is to clean-up the test organization and its related data associated with it
-  after(() => {
-    cy.mailinatorEmailCleanUp()
   })
 })
