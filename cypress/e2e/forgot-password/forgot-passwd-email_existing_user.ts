@@ -13,6 +13,7 @@ const expectedContentResetPasswordEmail = [
 ]
 interface Mail {
   subject: string
+  domain: string
   from: string
   to: string
 }
@@ -36,15 +37,17 @@ describe('should verify if Mailinator Inbox has the expected email to be verifie
         Authorization: mailinatorBearerToken
       }
     }).then(response => {
-      const mails = response.body as MailinatorResponse
+      const emails = response.body as MailinatorResponse
 
-      if (mails.msgs !== null && mails.msgs !== undefined && mails.msgs.length > 0) {
+      if (emails.msgs !== null && emails.msgs !== undefined && emails.msgs.length > 0) {
         // Verify if there are messages, proceed with assertions
-        expect(mails.msgs[0].subject).to.equal('Workyard Password Reset')
-        expect(mails.msgs[0].to).to.equal('existing.user.staging')
+        expect(emails.msgs[0].subject).to.equal('Workyard Password Reset')
+        expect(emails.msgs[0].domain).to.equal('workyard.testinator.com')
+        expect(emails.msgs[0].to).to.equal('existing.user.staging')
+        expect(emails.msgs[0].from).to.equal('Workyard')
       } else {
         // If no messages, it will retry based on the attemptCount
-        cy.wait(1000) // Adjust the delay as needed
+        cy.wait(1000)
         checkMailinatorInbox(attemptCount + 1)
       }
     })
@@ -55,7 +58,7 @@ describe('should verify if Mailinator Inbox has the expected email to be verifie
   })
 })
 describe('Verify the contents of the forgot password email', () => {
-  it('should make a successful GET request', () => {
+  it('should successfully fetch the latest reset password email and', () => {
     cy.request({
       method: 'GET',
       url: 'https://mailinator.com/api/v2/domains/private/inboxes?limit=1&sort=descending',
