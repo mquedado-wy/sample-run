@@ -38,6 +38,15 @@ declare namespace Cypress {
     resendEmailInviteRequest(): Chainable
   }
 }
+interface Mail {
+  subject: string
+  from: string
+  // Add other fields as needed
+}
+
+interface MailinatorResponse {
+  msgs: Mail[]
+}
 Cypress.Commands.add('genRandomString', (length: number) => {
   let resultChar = ''
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
