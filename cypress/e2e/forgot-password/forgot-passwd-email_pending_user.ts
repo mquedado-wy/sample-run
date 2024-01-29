@@ -11,19 +11,54 @@ const expectedContentPendingInviteEmail = [
   FP_EMAIL_PENDINGUSER_CONTENT_MESSAGE,
   FP_EMAIL_PENDINGUSER_CONTENT_INFO
 ]
+interface Mail {
+  subject: string
+  from: string
+  to: string
+}
 
-describe('Verify the contents of the forgot password email', () => {
+interface MailinatorResponse {
+  msgs: Mail[]
+}
+describe('should verify if Mailinator Inbox has the expected email to be verified', function () {
   before(() => {
     cy.resendEmailInviteRequest()
   })
-  it('should make a successful GET request', () => {
-    // This timeout is needed for a delay for waiting for the mailinator inbox to be refreshed
-    // And make sure that the mailinator inbox have the
-    cy.wait(10000)
+  const checkMailinatorInbox = (attemptCount: number): void => {
+    if (attemptCount > 5) {
+      throw new Error('Exceeded maximum retry attempts')
+    }
+
     cy.request({
       method: 'GET',
       url: 'https://mailinator.com/api/v2/domains/private/inboxes?limit=1&sort=descending',
-      timeout: 20000,
+      headers: {
+        Authorization: mailinatorBearerToken
+      }
+    }).then(response => {
+      const mails = response.body as MailinatorResponse
+
+      if (mails.msgs !== null && mails.msgs !== undefined && mails.msgs.length > 0) {
+        // Verify if there are messages, proceed with assertions
+        expect(mails.msgs[0].subject).to.equal('Mark Quedado invited you to join Workyard')
+        expect(mails.msgs[0].to).to.equal('pending.user.staging')
+      } else {
+        // If no messages, it will retry based on the attemptCount
+        cy.wait(1000) // Adjust the delay as needed
+        checkMailinatorInbox(attemptCount + 1)
+      }
+    })
+  }
+  // Recursively calling the checkMailinatorInbox method
+  it('should check if the inbox has message to be verified', function () {
+    checkMailinatorInbox(1)
+  })
+})
+describe('Verify the contents of the forgot password email', () => {
+  it('should make a successful GET request', () => {
+    cy.request({
+      method: 'GET',
+      url: 'https://mailinator.com/api/v2/domains/private/inboxes?limit=1&sort=descending',
       headers: {
         Authorization: mailinatorBearerToken
       }
