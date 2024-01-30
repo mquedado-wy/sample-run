@@ -10,8 +10,8 @@ import {
 
 describe('Verify Signup Page is loaded', () => {
   it('Visits the staging workyard website Signup Page', () => {
-    const baseUrl = Cypress.env('STAGING_BASE_URL')
-    cy.visit(`${baseUrl}/sign_up`)
+    const STAGING_BASE_URL = Cypress.env('STAGING_BASE_URL')
+    cy.visit(`${STAGING_BASE_URL}/sign_up`)
     cy.assertElementContainsText('h1', 'Try Workyard for free')
 
     // Verify all sign-up fields are displayed
