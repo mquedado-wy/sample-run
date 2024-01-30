@@ -11,10 +11,10 @@ import {
   LOGIN_WITH_MOBILE
 } from '../../utilities/login/login-locators'
 
-const baseUrl = Cypress.env('STAGING_BASE_URL')
+const STAGING_BASE_URL = Cypress.env('STAGING_BASE_URL')
 describe('Verify Signup Page is loaded', () => {
   it('Visits the staging workyard website Signup Page', () => {
-    cy.visit(`${baseUrl}/login`)
+    cy.visit(`${STAGING_BASE_URL}/login`)
     cy.assertElementsAreVisible([WORKYARD_LOGO])
 
     // Verify all sign-up fields are displayed
