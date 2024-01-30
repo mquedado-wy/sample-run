@@ -25,8 +25,8 @@ import {
   JOB_COSTING_NAV_BTN
 } from '../../utilities/dashboard/dashboard-locators'
 
-const baseUrl = Cypress.env('baseUrl')
-const testAdminExpdMonthlyWFM = Cypress.env('testAdminExpdMonthlyWFM')
+const baseUrl = Cypress.env('STAGING_BASE_URL')
+const testAdminExpdMonthlyWFM = Cypress.env('STAGING_TEST_ADMIN_EXPIRED_MONTHLY_WFM')
 describe('Verify when trial expires after 14days the screen will be take over by ', () => {
   it('should verify that Admin subscribed to 14-day trial of "Monthly Workforce Managment" plan is blocked by the "take-over-screen"', () => {
     // Logins the test data for User: Manager
