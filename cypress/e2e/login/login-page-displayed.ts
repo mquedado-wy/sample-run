@@ -11,7 +11,7 @@ import {
   LOGIN_WITH_MOBILE
 } from '../../utilities/login/login-locators'
 
-const baseUrl = Cypress.env('baseUrl')
+const baseUrl = Cypress.env('STAGING_BASE_URL')
 describe('Verify Signup Page is loaded', () => {
   it('Visits the staging workyard website Signup Page', () => {
     cy.visit(`${baseUrl}/login`)
