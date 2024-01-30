@@ -148,8 +148,8 @@ describe('Create a new User to test Subscription Page', () => {
 
     // Intercept 'POST' Request then wait for the request to have Success 200 Code
     cy.assertElementVisibleAndClick(AGREE_TERMS_OF_SERVICE, 'accept-terms')
-    cy.intercept('POST', paymentMethodEndPoint).as('subscribePlan')
-    cy.intercept('POST', billingAndPlansEndPoint).as('billingEndPoint')
+    cy.intercept('POST', STAGING_PAYMENT_METHOD_ENDPOINT).as('subscribePlan')
+    cy.intercept('POST', STAGING_BILLING_AND_PLANS_ENDPOINT).as('billingEndPoint')
 
     cy.assertElementVisibleAndClick(SUBSCRIBE_BTN, 'subscribe-btn')
     cy.wait(['@subscribePlan', '@billingEndPoint']).spread(
@@ -201,7 +201,7 @@ describe('Create a new User to test Subscription Page', () => {
 
   it('should verify that user has only "TIME TRACKING and WORKFORCE MANAGEMENT" features only', () => {
     // Logins the newly created user
-    cy.visit(`${baseUrl}/login`)
+    cy.visit(`${STAGING_BASE_URL}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
