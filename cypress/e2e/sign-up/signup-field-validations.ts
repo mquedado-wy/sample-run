@@ -39,8 +39,8 @@ import {
 describe('Sign-up field validation', () => {
   it('should able to verify sign-up field error validations', () => {
     // User is navigated to SIGN-UP page
-    const baseUrl = Cypress.env('STAGING_BASE_URL')
-    cy.visit(`${baseUrl}/sign_up`)
+    const STAGING_BASE_URL = Cypress.env('STAGING_BASE_URL')
+    cy.visit(`${STAGING_BASE_URL}/sign_up`)
 
     // First Round of Error Field Validations
     cy.get(LETSGO_BTN).click()
