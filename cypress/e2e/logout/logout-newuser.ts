@@ -38,11 +38,11 @@ import {
   INIT_NAME
 } from '../../utilities/login/login-messages-constants'
 
-const baseUrl = Cypress.env('STAGING_BASE_URL')
+const STAGING_BASE_URL = Cypress.env('STAGING_BASE_URL')
 describe('Verify a "newly" registered user is able to login', () => {
   it('should allow a user to sign up successfully', () => {
     // User is navigated to SIGN-UP page
-    cy.visit(`${baseUrl}/sign_up`)
+    cy.visit(`${STAGING_BASE_URL}/sign_up`)
 
     cy.genRandomString(6).then((randomString: string) => {
       const finName = INIT_NAME + randomString
@@ -86,7 +86,7 @@ describe('Verify a "newly" registered user is able to login', () => {
   })
 
   it('should logout the newly created user from DASHBOARD page', () => {
-    cy.visit(`${baseUrl}/login`)
+    cy.visit(`${STAGING_BASE_URL}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
@@ -107,7 +107,7 @@ describe('Verify a "newly" registered user is able to login', () => {
   })
 
   it('should logout the newly created user from TIMECARDS page', () => {
-    cy.visit(`${baseUrl}/login`)
+    cy.visit(`${STAGING_BASE_URL}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
@@ -128,7 +128,7 @@ describe('Verify a "newly" registered user is able to login', () => {
   })
 
   it('should logout the newly created user from PROJECT HUB page', () => {
-    cy.visit(`${baseUrl}/login`)
+    cy.visit(`${STAGING_BASE_URL}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
@@ -149,7 +149,7 @@ describe('Verify a "newly" registered user is able to login', () => {
   })
 
   it('should logout the newly created user from TASK & SCHEDULE page', () => {
-    cy.visit(`${baseUrl}/login`)
+    cy.visit(`${STAGING_BASE_URL}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
@@ -173,7 +173,7 @@ describe('Verify a "newly" registered user is able to login', () => {
   })
 
   it('should logout the newly created user from JOB COSTING page', () => {
-    cy.visit(`${baseUrl}/login`)
+    cy.visit(`${STAGING_BASE_URL}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
@@ -194,7 +194,7 @@ describe('Verify a "newly" registered user is able to login', () => {
   })
 
   it('should logout the newly created user from TEAM MEMBERS page', () => {
-    cy.visit(`${baseUrl}/login`)
+    cy.visit(`${STAGING_BASE_URL}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
@@ -216,7 +216,7 @@ describe('Verify a "newly" registered user is able to login', () => {
   })
 
   it('should logout the newly created user from INTEGRATIONS page', () => {
-    cy.visit(`${baseUrl}/login`)
+    cy.visit(`${STAGING_BASE_URL}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
@@ -237,7 +237,7 @@ describe('Verify a "newly" registered user is able to login', () => {
   })
 
   it('should handle no network connectivity when user logs out', () => {
-    cy.visit(`${baseUrl}/login`)
+    cy.visit(`${STAGING_BASE_URL}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
