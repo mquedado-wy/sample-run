@@ -10,7 +10,7 @@ import {
 
 describe('Verify Signup Page is loaded', () => {
   it('Visits the staging workyard website Signup Page', () => {
-    const baseUrl = Cypress.env('baseUrl')
+    const baseUrl = Cypress.env('STAGING_BASE_URL')
     cy.visit(`${baseUrl}/sign_up`)
     cy.assertElementContainsText('h1', 'Try Workyard for free')
 
