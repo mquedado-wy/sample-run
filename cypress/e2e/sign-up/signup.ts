@@ -23,8 +23,8 @@ import {
 describe('Verify User Signs up for a 14-day Trial Period', () => {
   it('should allow a user to sign up successfully', () => {
     // User is navigated to SIGN-UP page
-    const baseUrl = Cypress.env('STAGING_BASE_URL')
-    cy.visit(`${baseUrl}/sign_up`)
+    const STAGING_BASE_URL = Cypress.env('STAGING_BASE_URL')
+    cy.visit(`${STAGING_BASE_URL}/sign_up`)
 
     // User supplies valid inputs for all fields
     cy.genRandomString(6).then(randomString => {
