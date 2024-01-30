@@ -40,13 +40,13 @@ import {
   SETTINGS_BTN
 } from 'cypress/utilities/dashboard/dashboard-locators'
 
-const baseUrl = Cypress.env('STAGING_BASE_URL')
-const testManagerAccount = Cypress.env('STAGING_TEST_MANAGER_ACCOUNT')
-const testWorkerAccount = Cypress.env('STAGING_TEST_WORKER_ACCOUNT')
+const STAGING_BASE_URL = Cypress.env('STAGING_BASE_URL')
+const STAGING_TEST_MANAGER_ACCOUNT = Cypress.env('STAGING_TEST_MANAGER_ACCOUNT')
+const STAGING_TEST_WORKER_ACCOUNT = Cypress.env('STAGING_TEST_WORKER_ACCOUNT')
 describe('Verify the permsissions of Admin, Manager and Worker in Signing up for Subscription', () => {
   it('should verify that Admin has options for subscription to Time Tracking and Workforce Management', () => {
     // User is navigated to SIGN-UP page
-    cy.visit(`${baseUrl}/sign_up`)
+    cy.visit(`${STAGING_BASE_URL}/sign_up`)
 
     // User supplies valid inputs for all fields
     cy.genRandomString(6).then((randomString: string) => {
@@ -108,7 +108,7 @@ describe('Verify the permsissions of Admin, Manager and Worker in Signing up for
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
-      testManagerAccount
+      STAGING_TEST_MANAGER_ACCOUNT
     )
     cy.assertElementVisibleAndType(
       LOGIN_PASSWORD_FLD,
@@ -126,11 +126,11 @@ describe('Verify the permsissions of Admin, Manager and Worker in Signing up for
 
   it('should verify that Worker User does not have access to "Plans & Billing" and "Personal" menu', () => {
     // Logins the test data for User: Worker
-    cy.visit(`${baseUrl}/login`)
+    cy.visit(`${STAGING_BASE_URL}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
-      testWorkerAccount
+      STAGING_TEST_WORKER_ACCOUNT
     )
     cy.assertElementVisibleAndType(
       LOGIN_PASSWORD_FLD,
