@@ -5,7 +5,7 @@ import {
   EXISTING_USER_EMAIL
 } from '../../utilities/forgot-password/forgot-passwd-messages-constants'
 
-const mailinatorBearerToken = Cypress.env('STAGING_MAILINATOR_BEARER_TOKEN')
+const STAGING_MAILINATOR_BEARER_TOKEN = Cypress.env('STAGING_MAILINATOR_BEARER_TOKEN')
 const expectedContentResetPasswordEmail = [
   FP_EMAIL_EXISTINGUSER_CONTENT_HEADER,
   FP_EMAIL_EXISTINGUSER_CONTENT_MESSAGE,
@@ -34,7 +34,7 @@ describe('should verify if Mailinator Inbox has the expected email to be verifie
       method: 'GET',
       url: 'https://mailinator.com/api/v2/domains/private/inboxes?limit=1&sort=descending',
       headers: {
-        Authorization: mailinatorBearerToken
+        Authorization: STAGING_MAILINATOR_BEARER_TOKEN
       }
     }).then(response => {
       const emails = response.body as MailinatorResponse
@@ -63,7 +63,7 @@ describe('Verify the contents of the forgot password email', () => {
       method: 'GET',
       url: 'https://mailinator.com/api/v2/domains/private/inboxes?limit=1&sort=descending',
       headers: {
-        Authorization: mailinatorBearerToken
+        Authorization: STAGING_MAILINATOR_BEARER_TOKEN
       }
     }).then((inboxResponse) => {
       // Verify that the response status is 200 OK
@@ -118,7 +118,7 @@ describe('Verify the contents of the forgot password email', () => {
         method: 'GET',
         url: `https://mailinator.com/api/v2/domains/private/messages/${msgId}/links`,
         headers: {
-          Authorization: mailinatorBearerToken
+          Authorization: STAGING_MAILINATOR_BEARER_TOKEN
         }
       }).then((response) => {
         // Verify that the response status is 200 OK
@@ -131,7 +131,7 @@ describe('Verify the contents of the forgot password email', () => {
         method: 'DELETE',
         url: `https://mailinator.com/api/v2/domains/private/messages/${msgId}`,
         headers: {
-          Authorization: mailinatorBearerToken
+          Authorization: STAGING_MAILINATOR_BEARER_TOKEN
         }
       }).then((response) => {
         // Verify that the response status is 200 OK
