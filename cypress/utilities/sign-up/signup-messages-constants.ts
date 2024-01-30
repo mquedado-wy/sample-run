@@ -16,10 +16,6 @@ export const PASSWORD_ERROR_MSG2 =
 export const MOBILE_NUMBER_INFO_MSG = "We'll text you a link to install our app"
 export const PASSWORD_INFO_MSG = 'Minimum 8 characters and one numeric'
 
-// SIGN-UP URLS
-export const WYSTAGING_SIGNUP_URL =
-  'https://www.stagingworkyardwebsite.com/u/sign_up'
-
 // SIGN-UP CONSTANT VARIABLES
 export const INIT_NAME = 'WY User'
 export const NEW_SIGNUP_EMAIL = `new.user2.${Math.floor(Math.random() * 900) + 100}${Cypress.env('STAGING_APP_ENV')}@workyard.testinator.com`
