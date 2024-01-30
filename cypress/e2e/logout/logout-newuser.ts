@@ -38,7 +38,7 @@ import {
   INIT_NAME
 } from '../../utilities/login/login-messages-constants'
 
-const baseUrl = Cypress.env('baseUrl')
+const baseUrl = Cypress.env('STAGING_BASE_URL')
 describe('Verify a "newly" registered user is able to login', () => {
   it('should allow a user to sign up successfully', () => {
     // User is navigated to SIGN-UP page
