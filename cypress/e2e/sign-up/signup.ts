@@ -23,7 +23,7 @@ import {
 describe('Verify User Signs up for a 14-day Trial Period', () => {
   it('should allow a user to sign up successfully', () => {
     // User is navigated to SIGN-UP page
-    const baseUrl = Cypress.env('baseUrl')
+    const baseUrl = Cypress.env('STAGING_BASE_URL')
     cy.visit(`${baseUrl}/sign_up`)
 
     // User supplies valid inputs for all fields
