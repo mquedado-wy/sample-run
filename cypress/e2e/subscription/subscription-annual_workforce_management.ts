@@ -70,10 +70,10 @@ import {
   TEAM_MEMBERS_NAV_BTN
 } from '../../utilities/dashboard/dashboard-locators'
 
-const baseUrl = Cypress.env('baseUrl')
-const paymentMethodEndPoint = Cypress.env('paymentMethodEndPoint')
+const baseUrl = Cypress.env('STAGING_BASE_URL')
+const paymentMethodEndPoint = Cypress.env('STAGING_PAYMENT_METHOD_ENDPOINT')
 const billingAndPlansEndPoint = new RegExp(
-  Cypress.env('billingAndPlansEndPoint')
+  Cypress.env('STAGING_BILLING_AND_PLANS_ENDPOINT')
 )
 describe('Create a new User to test Subscription Page', () => {
   it('should allow a user to sign up successfully', () => {
