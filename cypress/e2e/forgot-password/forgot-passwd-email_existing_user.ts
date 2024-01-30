@@ -5,7 +5,7 @@ import {
   EXISTING_USER_EMAIL
 } from '../../utilities/forgot-password/forgot-passwd-messages-constants'
 
-const mailinatorBearerToken = Cypress.env('mailinatorBearerToken')
+const mailinatorBearerToken = Cypress.env('STAGING_MAILINATOR_BEARER_TOKEN')
 const expectedContentResetPasswordEmail = [
   FP_EMAIL_EXISTINGUSER_CONTENT_HEADER,
   FP_EMAIL_EXISTINGUSER_CONTENT_MESSAGE,
