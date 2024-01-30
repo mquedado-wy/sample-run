@@ -70,15 +70,15 @@ import {
   TEAM_MEMBERS_NAV_BTN
 } from '../../utilities/dashboard/dashboard-locators'
 
-const baseUrl = Cypress.env('STAGING_BASE_URL')
-const paymentMethodEndPoint = Cypress.env('STAGING_PAYMENT_METHOD_ENDPOINT')
-const billingAndPlansEndPoint = new RegExp(
+const STAGING_BASE_URL = Cypress.env('STAGING_BASE_URL')
+const STAGING_PAYMENT_METHOD_ENDPOINT = Cypress.env('STAGING_PAYMENT_METHOD_ENDPOINT')
+const STAGING_BILLING_AND_PLANS_ENDPOINT = new RegExp(
   Cypress.env('STAGING_BILLING_AND_PLANS_ENDPOINT')
 )
 describe('Create a new User to test Subscription Page', () => {
   it('should allow a user to sign up successfully', () => {
     // User is navigated to SIGN-UP page
-    cy.visit(`${baseUrl}/sign_up`)
+    cy.visit(`${STAGING_BASE_URL}/sign_up`)
 
     // User supplies valid inputs for all fields
     cy.genRandomString(6).then(randomString => {
@@ -121,7 +121,7 @@ describe('Create a new User to test Subscription Page', () => {
 
   it('should verify that user is able to subscribe to "WORKFORCE MANAGEMENT PLAN - ANNUALLY"', () => {
     // Logins the newly created user
-    cy.visit(`${baseUrl}/login`)
+    cy.visit(`${STAGING_BASE_URL}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
@@ -177,7 +177,7 @@ describe('Create a new User to test Subscription Page', () => {
 
   it('should verify that user is successfully subscribe to "WORKFORCE MANAGEMENT - ANNUALLY"', () => {
     // Logins the newly created user
-    cy.visit(`${baseUrl}/login`)
+    cy.visit(`${STAGING_BASE_URL}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
@@ -209,7 +209,7 @@ describe('Create a new User to test Subscription Page', () => {
 
   it('should verify that user has both "TIME TRACKING and WORKFORCE MANAGEMENT" features only', () => {
     // Logins the newly created user
-    cy.visit(`${baseUrl}/login`)
+    cy.visit(`${STAGING_BASE_URL}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
