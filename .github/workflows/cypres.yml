@@ -1,6 +1,6 @@
 name: Daily Cypress Tests
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   run-cypress-tests:
