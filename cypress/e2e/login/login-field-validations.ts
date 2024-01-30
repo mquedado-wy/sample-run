@@ -17,10 +17,10 @@ import {
   UNKNOWN_USER_EMAIL
 } from '../../utilities/login/login-messages-constants'
 
-const baseUrl = Cypress.env('STAGING_BASE_URL')
+const STAGING_BASE_URL = Cypress.env('STAGING_BASE_URL')
 describe('Login Page field validation', () => {
   it('should display the error fields validation for Login Page', () => {
-    cy.visit(`${baseUrl}/login`)
+    cy.visit(`${STAGING_BASE_URL}/login`)
 
     cy.assertElementVisibleAndClick(LOGIN_BTN, 'login-btn')
     cy.assertElementContainsText(LOGIN_EMAIL_ERROR_FLD, LOGIN_EMAIL_ERROR_MSG1)
