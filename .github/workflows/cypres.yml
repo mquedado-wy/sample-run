@@ -1,8 +1,6 @@
 name: Daily Cypress Tests
 
-on:
-  schedule:
-    - cron: '47 05 * * *'
+on: [push, pull_request]
 
 jobs:
   run-cypress-tests:
