@@ -104,7 +104,7 @@ describe('Verify the permsissions of Admin, Manager and Worker in Signing up for
 
   it('should verify that Manager User does not have access to "Plans & Billing" menu', () => {
     // Logins the test data for User: Manager
-    cy.visit(`${baseUrl}/login`)
+    cy.visit(`${STAGING_BASE_URL}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
