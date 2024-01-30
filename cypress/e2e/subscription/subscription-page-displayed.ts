@@ -52,7 +52,7 @@ import {
   AGREE_TERMS_OF_SERVICE_MSG
 } from '../../utilities/subscription/subscription-messages-constants'
 
-const baseUrl = Cypress.env('baseUrl')
+const baseUrl = Cypress.env('STAGING_BASE_URL')
 describe('Create a new User to test Subscription Page', () => {
   it('should allow a user to sign up successfully', () => {
     // User is navigated to SIGN-UP page
