@@ -40,9 +40,9 @@ import {
   SETTINGS_BTN
 } from 'cypress/utilities/dashboard/dashboard-locators'
 
-const baseUrl = Cypress.env('baseUrl')
-const testManagerAccount = Cypress.env('testManagerAccount')
-const testWorkerAccount = Cypress.env('testWorkerAccount')
+const baseUrl = Cypress.env('STAGING_BASE_URL')
+const testManagerAccount = Cypress.env('STAGING_TEST_MANAGER_ACCOUNT')
+const testWorkerAccount = Cypress.env('STAGING_TEST_WORKER_ACCOUNT')
 describe('Verify the permsissions of Admin, Manager and Worker in Signing up for Subscription', () => {
   it('should verify that Admin has options for subscription to Time Tracking and Workforce Management', () => {
     // User is navigated to SIGN-UP page
