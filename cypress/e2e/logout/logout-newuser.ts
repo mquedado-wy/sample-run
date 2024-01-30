@@ -124,7 +124,7 @@ describe('Verify a "newly" registered user is able to login', () => {
     cy.assertElementVisibleAndClick(TIMECARDS_NAV_BTN, 'timecards-button')
     cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
     cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
-    cy.url().should('eq', `${baseUrl}/login`)
+    cy.url().should('eq', `${STAGING_BASE_URL}/login`)
   })
 
   it('should logout the newly created user from PROJECT HUB page', () => {
@@ -145,7 +145,7 @@ describe('Verify a "newly" registered user is able to login', () => {
     cy.assertElementVisibleAndClick(PROJECT_HUB_NAV_BTN, 'proj-hub-button')
     cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
     cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
-    cy.url().should('eq', `${baseUrl}/login`)
+    cy.url().should('eq', `${STAGING_BASE_URL}/login`)
   })
 
   it('should logout the newly created user from TASK & SCHEDULE page', () => {
@@ -169,7 +169,7 @@ describe('Verify a "newly" registered user is able to login', () => {
     )
     cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
     cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
-    cy.url().should('eq', `${baseUrl}/login`)
+    cy.url().should('eq', `${STAGING_BASE_URL}/login`)
   })
 
   it('should logout the newly created user from JOB COSTING page', () => {
@@ -190,7 +190,7 @@ describe('Verify a "newly" registered user is able to login', () => {
     cy.assertElementVisibleAndClick(JOB_COSTING_NAV_BTN, 'job-costing-button')
     cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
     cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
-    cy.url().should('eq', `${baseUrl}/login`)
+    cy.url().should('eq', `${STAGING_BASE_URL}/login`)
   })
 
   it('should logout the newly created user from TEAM MEMBERS page', () => {
@@ -212,7 +212,7 @@ describe('Verify a "newly" registered user is able to login', () => {
     cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-menu')
     cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
     cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
-    cy.url().should('eq', `${baseUrl}/login`)
+    cy.url().should('eq', `${STAGING_BASE_URL}/login`)
   })
 
   it('should logout the newly created user from INTEGRATIONS page', () => {
@@ -233,7 +233,7 @@ describe('Verify a "newly" registered user is able to login', () => {
     cy.assertElementVisibleAndClick(INTEGRATIONS_NAV_BTN, 'integration-button')
     cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
     cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
-    cy.url().should('eq', `${baseUrl}/login`)
+    cy.url().should('eq', `${STAGING_BASE_URL}/login`)
   })
 
   it('should handle no network connectivity when user logs out', () => {
@@ -255,7 +255,7 @@ describe('Verify a "newly" registered user is able to login', () => {
     // Temporarily simulates no internet connectivity
     cy.intercept({ url: '**/*' }, { forceNetworkError: true })
     cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
-    cy.url().should('eq', `${baseUrl}/login`)
+    cy.url().should('eq', `${STAGING_BASE_URL}/login`)
   })
   after(() => {
     // This is to clean-up the test organization and its related data associated with it
