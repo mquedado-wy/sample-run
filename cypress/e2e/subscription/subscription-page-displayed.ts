@@ -52,11 +52,11 @@ import {
   AGREE_TERMS_OF_SERVICE_MSG
 } from '../../utilities/subscription/subscription-messages-constants'
 
-const baseUrl = Cypress.env('STAGING_BASE_URL')
+const STAGING_BASE_URL = Cypress.env('STAGING_BASE_URL')
 describe('Create a new User to test Subscription Page', () => {
   it('should allow a user to sign up successfully', () => {
     // User is navigated to SIGN-UP page
-    cy.visit(`${baseUrl}/sign_up`)
+    cy.visit(`${STAGING_BASE_URL}/sign_up`)
 
     // User supplies valid inputs for all fields
     cy.genRandomString(6).then((randomString: string) => {
@@ -98,7 +98,7 @@ describe('Create a new User to test Subscription Page', () => {
 
   it('should verify that all "Subscription" fields,labels and headers are displayed', () => {
     // Logins the newly created user
-    cy.visit(`${baseUrl}/login`)
+    cy.visit(`${STAGING_BASE_URL}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
