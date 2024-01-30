@@ -22,10 +22,10 @@ import {
   FORGOT_PASSWD_INVALID_MSG
 } from '../../utilities/forgot-password/forgot-passwd-messages-constants'
 
-const baseUrl = Cypress.env('STAGING_BASE_URL')
+const STAGING_BASE_URL = Cypress.env('STAGING_BASE_URL')
 describe('Verify Users use "Forgot Password" feature', () => {
   it('should display all forgot password fields and web elements', () => {
-    cy.visit(`${baseUrl}/forgot_password`)
+    cy.visit(`${STAGING_BASE_URL}/forgot_password`)
     cy.assertElementsAreVisible([WORKYARD_LOGO])
 
     // Verify all forgot password fields and web elements are displayed
@@ -38,7 +38,7 @@ describe('Verify Users use "Forgot Password" feature', () => {
   })
 
   it('should display instructions for forgot password', () => {
-    cy.visit(`${baseUrl}/forgot_password`)
+    cy.visit(`${STAGING_BASE_URL}/forgot_password`)
     cy.assertElementsAreVisible([WORKYARD_LOGO])
 
     // Verify success message when existing user tries to use forgot password feature
@@ -59,7 +59,7 @@ describe('Verify Users use "Forgot Password" feature', () => {
   })
 
   it('should not allow non-existent users to use the forgot password feature', () => {
-    cy.visit(`${baseUrl}/forgot_password`)
+    cy.visit(`${STAGING_BASE_URL}/forgot_password`)
     cy.assertElementsAreVisible([WORKYARD_LOGO])
 
     // Verify error message when unknown user tries to use forgot password feature
@@ -76,7 +76,7 @@ describe('Verify Users use "Forgot Password" feature', () => {
   })
 
   it('should allow pending users to use the forgot password feature', () => {
-    cy.visit(`${baseUrl}/forgot_password`)
+    cy.visit(`${STAGING_BASE_URL}/forgot_password`)
     cy.assertElementsAreVisible([WORKYARD_LOGO])
 
     // Verify info message when pending user tries to use forgot password feature
@@ -93,7 +93,7 @@ describe('Verify Users use "Forgot Password" feature', () => {
   })
 
   it('should show other in-line error messages for invalid inputs', () => {
-    cy.visit(`${baseUrl}/forgot_password`)
+    cy.visit(`${STAGING_BASE_URL}/forgot_password`)
     cy.assertElementsAreVisible([WORKYARD_LOGO])
 
     // Verify info message when unknown user tries to use forgot password feature
