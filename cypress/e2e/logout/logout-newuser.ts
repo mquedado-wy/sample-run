@@ -103,7 +103,7 @@ describe('Verify a "newly" registered user is able to login', () => {
     cy.assertElementVisibleAndClick(DASHBOARD_NAV_BTN, 'dashboard-button')
     cy.assertElementVisibleAndClick(USER_INFO_MENU, 'user-info-button')
     cy.assertElementVisibleAndClick(LOGOUT_BUTTON, 'logout-button')
-    cy.url().should('eq', `${baseUrl}/login`)
+    cy.url().should('eq', `${STAGING_BASE_URL}/login`)
   })
 
   it('should logout the newly created user from TIMECARDS page', () => {
