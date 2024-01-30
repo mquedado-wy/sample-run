@@ -16,8 +16,6 @@ export const FP_EMAIL_PENDINGUSER_CONTENT_INFO = 'Workyard Crew enables you to e
 
 // FORGOT PASSWORD CONSTANTS
 export const UNKNOWN_USER_EMAIL = `unknown.user.${Math.floor(Math.random() * 900) + 100}${Cypress.env('appEnv')}@workyard.testinator.com`
-export const INVALID_EMAIL = 'invalid.email.' + Cypress.env('appEnv')
-// TODO: We need to permanently add existing.user.ENV@workyard.testinator.com to each ENV
-export const EXISTING_USER_EMAIL = 'existing.user.' + Cypress.env('appEnv') + '@workyard.testinator.com'
-// TODO: We need to permanently add pending.user.ENV@workyard.testinator.com to each ENV
-export const PENDING_USER_EMAIL = 'pending.user.' + Cypress.env('appEnv') + '@workyard.testinator.com'
+export const INVALID_EMAIL = 'invalid.email.' + Cypress.env('STAGING_APP_ENV')
+export const EXISTING_USER_EMAIL = 'existing.user.' + Cypress.env('STAGING_APP_ENV') + '@workyard.testinator.com'
+export const PENDING_USER_EMAIL = 'pending.user.' + Cypress.env('STAGING_APP_ENV') + '@workyard.testinator.com'
