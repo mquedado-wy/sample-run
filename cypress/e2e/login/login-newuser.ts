@@ -28,11 +28,11 @@ import {
   LOGIN_NO_INTERNET_ERROR_MSG
 } from '../../utilities/login/login-messages-constants'
 
-const baseUrl = Cypress.env('STAGING_BASE_URL')
+const STAGING_BASE_URL = Cypress.env('STAGING_BASE_URL')
 describe('Verify a "newly" registered user is able to login', () => {
   it('should allow a user to sign up successfully', () => {
     // User is navigated to SIGN-UP page
-    cy.visit(`${baseUrl}/sign_up`)
+    cy.visit(`${STAGING_BASE_URL}/sign_up`)
 
     // User supplies valid inputs for all fields
     cy.genRandomString(6).then((randomString: string) => {
@@ -77,7 +77,7 @@ describe('Verify a "newly" registered user is able to login', () => {
   })
 
   it('should login the newly created user', () => {
-    cy.visit(`${baseUrl}/login`)
+    cy.visit(`${STAGING_BASE_URL}/login`)
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
       'login-email-field',
@@ -93,7 +93,7 @@ describe('Verify a "newly" registered user is able to login', () => {
     cy.contains('Get Started')
   })
   it('should handle no network connectivitiy', () => {
-    cy.visit(`${baseUrl}/login`)
+    cy.visit(`${STAGING_BASE_URL}/login`)
     cy.intercept({ url: '**/*' }, { forceNetworkError: true })
     cy.assertElementVisibleAndType(
       LOGIN_EMAIL_FLD,
