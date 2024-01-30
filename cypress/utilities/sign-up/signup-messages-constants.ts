@@ -22,7 +22,7 @@ export const WYSTAGING_SIGNUP_URL =
 
 // SIGN-UP CONSTANT VARIABLES
 export const INIT_NAME = 'WY User'
-export const NEW_SIGNUP_EMAIL = `new.user2.${Math.floor(Math.random() * 900) + 100}${Cypress.env('appEnv')}@workyard.testinator.com`
+export const NEW_SIGNUP_EMAIL = `new.user2.${Math.floor(Math.random() * 900) + 100}${Cypress.env('STAGING_APP_ENV')}@workyard.testinator.com`
 export const MOBILE_NUMBER_SIGNUP = `+1${Math.floor(Math.random() * 9000000000) + 1000000000}`
 export const BUSINESS_NAME_SIGNUP = `Workyard System Tests Sign-Up Business V${Math.floor(Math.random() * 900) + 100}`
 export const DEFAULT_PASSWORD = 'wytest1234'
