@@ -22,7 +22,7 @@ import {
   FORGOT_PASSWD_INVALID_MSG
 } from '../../utilities/forgot-password/forgot-passwd-messages-constants'
 
-const baseUrl = Cypress.env('baseUrl')
+const baseUrl = Cypress.env('STAGING_BASE_URL')
 describe('Verify Users use "Forgot Password" feature', () => {
   it('should display all forgot password fields and web elements', () => {
     cy.visit(`${baseUrl}/forgot_password`)
