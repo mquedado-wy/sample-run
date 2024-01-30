@@ -5,7 +5,7 @@ import {
   PENDING_USER_EMAIL
 } from '../../utilities/forgot-password/forgot-passwd-messages-constants'
 
-const mailinatorBearerToken = Cypress.env('mailinatorBearerToken')
+const mailinatorBearerToken = Cypress.env('STAGING_MAILINATOR_BEARER_TOKEN')
 const expectedContentPendingInviteEmail = [
   FP_EMAIL_PENDINGUSER_CONTENT_HEADER,
   FP_EMAIL_PENDINGUSER_CONTENT_MESSAGE,
