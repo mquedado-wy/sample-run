@@ -197,7 +197,7 @@ Cypress.Commands.add(
   'testDataCleanUp', () => {
     cy.request({
       method: 'DELETE',
-      url: `https://${Cypress.env('appEnv')}-api1.workyard.com/delete_test_orgs`,
+      url: `https://${Cypress.env('STAGING_APP_ENV')}-api1.workyard.com/delete_test_orgs`,
       headers: {
         'x-workyard-system-tests': true
       }
@@ -213,7 +213,7 @@ Cypress.Commands.add(
       method: 'DELETE',
       url: 'https://mailinator.com/api/v2/domains/private/inboxes',
       headers: {
-        Authorization: `${Cypress.env('mailinatorBearerToken')}`
+        Authorization: `${Cypress.env('STAGING_MAILINATOR_BEARER_TOKEN')}`
       }
     }).then(response => {
       expect(response.status).to.equal(200)
@@ -227,7 +227,7 @@ Cypress.Commands.add(
       method: 'POST',
       url: 'https://staging-api1.workyard.com/request_password_reset',
       headers: {
-        Authorization: `${Cypress.env('forgotPWAuthToken')}`,
+        Authorization: `${Cypress.env('STAGING_FORGOTPW_AUTH_TOKEN')}`,
         'Workyard-Agent': 'website|Windows|NA|14.5.1|1920|1080|1|NA|Asia/Manila|v:1704844800',
         'x-workyard-system-tests': true
       },
@@ -247,7 +247,7 @@ Cypress.Commands.add(
       method: 'POST',
       url: 'https://staging-api1.workyard.com/resend_invite_by_email',
       headers: {
-        Authorization: `${Cypress.env('forgotPWAuthToken')}`,
+        Authorization: `${Cypress.env('STAGING_FORGOTPW_AUTH_TOKEN')}`,
         'Workyard-Agent': 'website|Windows|NA|14.5.1|1920|1080|1|NA|Asia/Manila|v:1704844800',
         'x-workyard-system-tests': true
       },
