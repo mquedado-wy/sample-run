@@ -25,13 +25,13 @@ import {
   JOB_COSTING_NAV_BTN
 } from '../../utilities/dashboard/dashboard-locators'
 
-const baseUrl = Cypress.env('STAGING_BASE_URL')
-const testAdminExpdMonthlyWFM = Cypress.env('STAGING_TEST_ADMIN_EXPIRED_MONTHLY_WFM')
+const STAGING_BASE_URL = Cypress.env('STAGING_BASE_URL')
+const STAGING_TEST_ADMIN_EXPIRED_MONTHLY_WFM = Cypress.env('STAGING_TEST_ADMIN_EXPIRED_MONTHLY_WFM')
 describe('Verify when trial expires after 14days the screen will be take over by ', () => {
   it('should verify that Admin subscribed to 14-day trial of "Monthly Workforce Managment" plan is blocked by the "take-over-screen"', () => {
     // Logins the test data for User: Manager
-    cy.visit(`${baseUrl}/login`)
-    cy.get(LOGIN_EMAIL_FLD).should('be.visible').type(testAdminExpdMonthlyWFM)
+    cy.visit(`${STAGING_BASE_URL}/login`)
+    cy.get(LOGIN_EMAIL_FLD).should('be.visible').type(STAGING_TEST_ADMIN_EXPIRED_MONTHLY_WFM)
     cy.get(LOGIN_PASSWORD_FLD).type(DEFAULT_PASSWORD)
     cy.get(LOGIN_BTN).should('be.visible').click()
     cy.assertElementsAreVisible([TRIAL_EXPIRED_DIV_OVERLAY])
