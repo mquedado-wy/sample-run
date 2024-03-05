@@ -61,7 +61,7 @@ describe('Verify when trial expires after 14days the screen will be take over by
     cy.assertElementsAreVisible([TRIAL_EXPIRED_REACTIVATE_OPTION, TRIAL_EXPIRED_SUBSCRIBE_OPTION])
     cy.assertElementContainsText(
       TRIAL_EXPIRED_REACTIVATE_FIELD_A,
-      'Reactivate Trial'
+      'Reactivate Free Trial'
     )
     cy.assertElementContainsText(
       TRIAL_EXPIRED_REACTIVATE_FIELD_B,
