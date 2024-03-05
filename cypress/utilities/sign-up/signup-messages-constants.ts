@@ -9,8 +9,7 @@ export const MOBILE_NUMBER_ERROR_MSG2 =
 export const BUSINESS_NAME_ERROR_MSG = 'Business name is required'
 export const EMPLOYEE_DROPDOWN_ERROR_MSG = 'This field is required.'
 export const PASSWORD_ERROR_MSG1 = 'Password is required.'
-export const PASSWORD_ERROR_MSG2 =
-  'The password must be between 8 and 64 characters.'
+export const PASSWORD_ERROR_MSG2 = 'Please choose a password with at least 8 characters.'
 
 // SIGN-UP INLINE INFO MESSAGES
 export const MOBILE_NUMBER_INFO_MSG = "We'll text you a link to install our app"
