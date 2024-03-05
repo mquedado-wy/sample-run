@@ -16,7 +16,7 @@ export const SUCCESSFUL_SUBSCRIPTION_PROMPT = 'div[data-testid="global-toast-suc
 export const SUBSCRIBE_HDR = 'div[data-testid="modal-header"]'
 export const PLAN_LBL1 = 'label[data-testid="undefined-label"]'
 export const PLAN_LBL2 = 'span[data-testid="billing-modal_plan-details_price-description"]'
-export const DUE_NOW_HDR = 'div[class="plan-billing-detailsstyled__DueNowText-sc-16v5pq1-12 ecMeAf"]'
+export const DUE_NOW_HDR = 'div[data-testid="billing-modal_plan-details_total-price-label"]'
 export const CREDIT_CARD_FLD = 'div[class="StripeElement StripeElement--empty"]'
 export const AGREE_TERMS_OF_SERVICE = 'div[data-testid="billing-modal_plan-details_tos-container"]'
 
