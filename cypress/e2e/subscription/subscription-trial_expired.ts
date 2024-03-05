@@ -7,7 +7,7 @@ import {
 } from '../../utilities/login/login-locators'
 
 import {
-  SUBSCRIPTION_MODAL_CONTAINER,
+  SUBSCRIBE_REACTIVATE_CONTAINER,
   TRIAL_EXPIRED_DAYS_LEFT,
   TRIAL_EXPIRED_DAYS_LEFT2,
   TRIAL_EXPIRED_DIV_OVERLAY,
@@ -15,15 +15,29 @@ import {
   TRIAL_EXPIRED_FLD2,
   TRIAL_EXPIRED_ACTIVATE_BTN,
   TRIAL_EXPIRED_WANT_HELP,
-  CURRENT_VALUE_OF_PLAN_TYPE
+  TRIAL_EXPIRED_REACTIVATE_OPTION,
+  TRIAL_EXPIRED_REACTIVATE_FIELD_A,
+  TRIAL_EXPIRED_REACTIVATE_FIELD_B,
+  TRIAL_EXPIRED_SUBSCRIBE_OPTION,
+  TRIAL_EXPIRED_SUBSCRIBE_FIELD_A,
+  TRIAL_EXPIRED_SUBSCRIBE_FIELD_B
 } from '../../utilities/subscription/subscription-locators'
 
 import {
   DASHBOARD_NAV_BTN,
   TIMECARDS_NAV_BTN,
   PROJECT_HUB_NAV_BTN,
-  JOB_COSTING_NAV_BTN
+  JOB_COSTING_NAV_BTN,
+  TEAM_MEMBERS_NAV_BTN,
+  INTEGRATIONS_NAV_BTN
 } from '../../utilities/dashboard/dashboard-locators'
+
+import {
+  TRIAL_EXPIRY_MESSAGE_A,
+  TRIAL_EXPIRY_MESSAGE_B,
+  TRIAL_REACTIVATE_MESSAGE,
+  TRIAL_SUBSCRIBE_MESSAGE
+} from '../../utilities/subscription/subscription-messages-constants'
 
 const STAGING_BASE_URL = Cypress.env('STAGING_BASE_URL')
 const STAGING_TEST_ADMIN_EXPIRED_MONTHLY_WFM = Cypress.env('STAGING_TEST_ADMIN_EXPIRED_MONTHLY_WFM')
@@ -38,15 +52,28 @@ describe('Verify when trial expires after 14days the screen will be take over by
 
     cy.assertElementContainsText(
       TRIAL_EXPIRED_FLD1,
-      'Your free trial has expired'
+      TRIAL_EXPIRY_MESSAGE_A
     )
     cy.assertElementContainsText(
       TRIAL_EXPIRED_FLD2,
-      'Subscribe to a plan to keep enjoying Workyard'
+      TRIAL_EXPIRY_MESSAGE_B
+    )
+    cy.assertElementsAreVisible([TRIAL_EXPIRED_REACTIVATE_OPTION, TRIAL_EXPIRED_SUBSCRIBE_OPTION])
+    cy.assertElementContainsText(
+      TRIAL_EXPIRED_REACTIVATE_FIELD_A,
+      'Reactivate Trial'
     )
     cy.assertElementContainsText(
-      CURRENT_VALUE_OF_PLAN_TYPE,
-      'Monthly Workforce Management Plan'
+      TRIAL_EXPIRED_REACTIVATE_FIELD_B,
+      TRIAL_REACTIVATE_MESSAGE
+    )
+    cy.assertElementContainsText(
+      TRIAL_EXPIRED_SUBSCRIBE_FIELD_A,
+      'Subscribe'
+    )
+    cy.assertElementContainsText(
+      TRIAL_EXPIRED_SUBSCRIBE_FIELD_B,
+      TRIAL_SUBSCRIBE_MESSAGE
     )
     cy.assertElementVisibleAndClick(DASHBOARD_NAV_BTN, 'dashboard-nav-btn')
 
@@ -64,19 +91,29 @@ describe('Verify when trial expires after 14days the screen will be take over by
     cy.assertElementVisibleAndClick(TIMECARDS_NAV_BTN, 'timecards_btn')
     cy.assertElementsAreVisible([
       TRIAL_EXPIRED_DIV_OVERLAY,
-      SUBSCRIPTION_MODAL_CONTAINER
+      SUBSCRIBE_REACTIVATE_CONTAINER
     ])
 
     cy.assertElementVisibleAndClick(PROJECT_HUB_NAV_BTN, 'project-hub_btn')
     cy.assertElementsAreVisible([
       TRIAL_EXPIRED_DIV_OVERLAY,
-      SUBSCRIPTION_MODAL_CONTAINER
+      SUBSCRIBE_REACTIVATE_CONTAINER
     ])
 
     cy.assertElementVisibleAndClick(JOB_COSTING_NAV_BTN, 'job-costing_btn')
     cy.assertElementsAreVisible([
       TRIAL_EXPIRED_DIV_OVERLAY,
-      SUBSCRIPTION_MODAL_CONTAINER
+      SUBSCRIBE_REACTIVATE_CONTAINER
+    ])
+    cy.assertElementVisibleAndClick(TEAM_MEMBERS_NAV_BTN, 'team-members_btn')
+    cy.assertElementsAreVisible([
+      TRIAL_EXPIRED_DIV_OVERLAY,
+      SUBSCRIBE_REACTIVATE_CONTAINER
+    ])
+    cy.assertElementVisibleAndClick(INTEGRATIONS_NAV_BTN, 'integrations_btn')
+    cy.assertElementsAreVisible([
+      TRIAL_EXPIRED_DIV_OVERLAY,
+      SUBSCRIBE_REACTIVATE_CONTAINER
     ])
   })
 })
