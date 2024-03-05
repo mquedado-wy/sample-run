@@ -1,4 +1,5 @@
 // SUBSCRIPTON LOCATORS
+export const SUBSCRIPTION_MODAL_CONTAINER = 'div[data-testid="modal-container"]'
 export const SUBSCRIBE_REACTIVATE_CONTAINER = 'div.k-widget.k-window.k-dialog > div'
 export const PLAN_DROPDOWN = 'span[data-testid="desktop-label"]'
 export const PLAN_DROPDOWN_LIST = 'li[class="indexes__SelectListButtonStyled-sc-1su5p0r-107 hKAkBg"]'
