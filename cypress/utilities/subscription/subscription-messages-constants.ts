@@ -24,3 +24,9 @@ export const SUCCESS_WORKFORCE_MANAGEMENT_PLAN_MONTHLY =
   'You successfully subscribed to workforce management plan - monthly'
 export const SUCCESS_WORKFORCE_MANAGEMENT_PLAN_ANNUALY =
   'You successfully subscribed to workforce management plan - annualy'
+
+// TRIAL EXPIRY MESSAGES
+export const TRIAL_EXPIRY_MESSAGE_A = 'Your free trial has expired'
+export const TRIAL_EXPIRY_MESSAGE_B = 'Your trial period expired over 30 days ago. Explore the following options to maintain access to Workyard.'
+export const TRIAL_REACTIVATE_MESSAGE = 'Reactivate your trial for 14 days'
+export const TRIAL_SUBSCRIBE_MESSAGE = 'Purchase a paid subscription plan to use Workyard'
