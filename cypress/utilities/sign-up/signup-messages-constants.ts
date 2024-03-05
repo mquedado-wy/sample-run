@@ -10,7 +10,7 @@ export const BUSINESS_NAME_ERROR_MSG = 'Business name is required'
 export const EMPLOYEE_DROPDOWN_ERROR_MSG = 'This field is required.'
 export const PASSWORD_ERROR_MSG1 = 'Password is required.'
 export const PASSWORD_ERROR_MSG2 =
-  'Please choose a valid password that contains at least 8 characters and one numeric value.'
+  'The password must be between 8 and 64 characters.'
 
 // SIGN-UP INLINE INFO MESSAGES
 export const MOBILE_NUMBER_INFO_MSG = "We'll text you a link to install our app"
